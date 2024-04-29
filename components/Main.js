@@ -3,42 +3,23 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaVi
 import { Ionicons } from '@expo/vector-icons';
 import Header from './Header';
 import Footer from './Footer';
+import quotes from './Quotes'; // quotes.js에서 명언 데이터 가져오기
+import fonts from './Font';
 
 const Main = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    // 메뉴를 열거나 닫는 함수
-    const toggleMenu = () => {
-      setIsMenuOpen(!isMenuOpen);
-    };
-  
+  // 임의의 명언 선택
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  const randomQuote = quotes[randomIndex];
+ 
   return (
     <SafeAreaView style={styles.container}>
-      {/* 포스트 목록 */}
       <ScrollView style={styles.content}>
-        {/* 포스트 1 */}
-        <View style={styles.post}>
-          <Text style={styles.postTitle}>포스트 제목</Text>
-          <Text style={styles.postContent}>포스트 내용</Text>
-        </View>
-
-        {/* 포스트 2 */}
-        <View style={styles.post}>
-          <Text style={styles.postTitle}>포스트 제목</Text>
-          <Text style={styles.postContent}>포스트 내용</Text>
-        </View>
-
-        {/* 포스트 3 */}
-        <View style={styles.post}>
-          <Text style={styles.postTitle}>포스트 제목</Text>
-          <Text style={styles.postContent}>포스트 내용</Text>
-        </View>
-        <View style={styles.post}>
-          <Text style={styles.postTitle}>포스트 제목</Text>
-          <Text style={styles.postContent}>포스트 내용</Text>
+        <View style = {styles.quoteBackgroundContainer}/>
+        <View style={styles.quoteContainer}>
+          <Text style={styles.quoteText}>{randomQuote}</Text>
         </View>
       </ScrollView>
-      <Footer/>
+      <Footer />
     </SafeAreaView>
   );
 }
@@ -46,27 +27,41 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dddddd', // 배경색을 흰색으로 지정
-    fontFamily: 'SpaceGroteskBold',
+    backgroundColor: '#dddddd',
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  post: {
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: '#f0f0f0', // 포스트 배경색을 연한 회색으로 지정
+  quoteBackgroundContainer : {
+    backgroundColor: 'black',
+    width: '95%',
+    height: 60,
+    zIndex : -1,
     borderRadius: 10,
+    borderWidth: 1.5,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    position : 'absolute',
+    top : 10,
+    left : 8,
+    marginTop : 20,
   },
-  postTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
+  quoteContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    width: '95%',
+    height: 60,
+    padding: 20,
+    marginBottom: 20,
+    borderWidth: 1.5,
+    borderColor: 'black',
+    marginTop : 20,
   },
-  postContent: {
-    fontSize: 16,
+  quoteText: {
+    fontFamily: 'black',
+    textAlign: 'center',
   },
 });
 
