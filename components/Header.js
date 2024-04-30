@@ -20,7 +20,7 @@ const Header = () => {
           <Ionicons name="arrow-back" size={27} color="black" />
         </TouchableOpacity>
       )}
-      <Text style={styles.headerTitle}>Capstone</Text>
+      <Text style={styles.headerTitle}>Hongjeongmin</Text>
     </View>
   );
 };
