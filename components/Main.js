@@ -1,33 +1,53 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import Header from './Header';
 import Footer from './Footer';
 import quotes from './Quotes'; // quotes.js에서 명언 데이터 가져오기
 import fonts from './Font';
 
+
 const Main = () => {
-  // 임의의 명언 선택
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[randomIndex];
+  const fadeAnim = useRef(new Animated.Value(0)).current; // 애니메이션을 위한 값 설정
+  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // 명언 변경
+      Animated.timing(fadeAnim, {
+        toValue: 0, // 투명도를 0으로 설정하여 페이드 아웃
+        duration: 500, // 애니메이션 지속 시간
+        useNativeDriver: true,
+      }).start(() => {
+        setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length); // 인덱스 증가
+        Animated.timing(fadeAnim, {
+          toValue: 1, // 투명도를 1로 설정하여 페이드 인
+          duration: 500, // 애니메이션 지속 시간
+          useNativeDriver: true,
+        }).start();
+      });
+    }, 3000);
+
+    return () => clearInterval(interval); // 언마운트될 때 인터벌 정리
+  }, [fadeAnim]);
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
-        {/* <View style = {styles.quoteBackgroundContainer}/> */}
-        <View style={styles.quoteContainer}>
-          <Text style={styles.quoteText}>{randomQuote}</Text>
-        </View>
+        <Animated.View style={[styles.quoteContainer, { opacity: fadeAnim }]}>
+          <Text style={styles.quoteText}>{quotes[quoteIndex]}</Text>
+        </Animated.View>
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
           <TouchableOpacity style={styles.component1}>
             <View style={styles.component1layout}>
               <View style={styles.component1layoutIcon}>
-                <Ionicons name="book" size={26} color="black" />
+              <Ionicons name="game-controller-outline" size={26} color="black" />
               </View>
               <Text style={styles.component1Text}>
-                Book
+                Contents
               </Text>
             </View>
           </TouchableOpacity>
@@ -35,7 +55,7 @@ const Main = () => {
           <TouchableOpacity style={styles.component2}>
             <View style={styles.component2layout}>
               <View style={styles.component2layoutIcon}>
-                <AntDesign name="smile-circle" size={26} color="black" />
+              <FontAwesome5 name="smile-wink" size={26} color="black" />
               </View>
               <Text style={styles.component2Text}>
                 Smile
@@ -123,9 +143,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     width: '95%',
-    height: 73,
+    height: 120,
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     borderWidth: 1.5,
     borderColor: 'black',
     marginTop: 20,
@@ -133,7 +153,7 @@ const styles = StyleSheet.create({
   quoteText: {
     fontFamily: 'BlackHanSansRegular',
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 23,
     fontWeight: 'bold',
   },
   component1Background: {
