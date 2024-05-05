@@ -43,6 +43,12 @@ const Login = ({ onLogin }) => {
           value={username}
           onChangeText={setUsername}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="이메일"
+          value={username}
+          onChangeText={setUsername}
+        />
         <View style = {styles.loginBtnContainer}/>
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Join</Text>
@@ -62,9 +68,9 @@ const styles = StyleSheet.create({
   },
   backgroundContainer : {
     backgroundColor : 'black',
-    top : 100,
+    top : 50,
     width : 300,
-    height : 400,
+    height : 500,
     borderRadius : 20,
     right : 24,
     zIndex : -1,
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
   loginContainer : {
     marginTop : -100,
     width: 300,
-    height: 400,
+    height: 500,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1.5,
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     position : 'absolute',
-    top : 310,
+    top : 395,
     right : 28,
   },
   buttonText: {

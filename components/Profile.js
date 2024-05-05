@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
 import fonts from './Font';
 import Footer from './Footer';
 
@@ -15,6 +16,10 @@ const Profile = () => {
     return null;
   }
 
+  const navigation = useNavigation();
+  const onPressMyInfo = () => {
+    navigation.navigate('Myinfo'); // MyInfo 스크린으로 이동
+  };
   const user = {
     username: 'jeongmin',
     profileImage: require('../assets/profile.jpg'),
@@ -41,8 +46,8 @@ const Profile = () => {
             </View>
           </TouchableOpacity>
           <View style={styles.component2Background} />
-          <TouchableOpacity style={styles.component2}>
-            <Text style={styles.component2Text}>뭐넣지</Text>
+          <TouchableOpacity style={styles.component2} onPress={onPressMyInfo}>
+            <Text style={styles.component2Text}>내 정보</Text>
             <Text style={styles.statusText}>내용임</Text>
             <View style={styles.component2layoutIcon}>
               <FontAwesome5 name="smile-wink" size={80} color="green" />
@@ -50,8 +55,9 @@ const Profile = () => {
           </TouchableOpacity>
           <View style={styles.component3Background} />
           <TouchableOpacity style={styles.component3}>
-            <Text style={styles.component3Text}>뭐넣지2</Text>
-            <Text style={styles.statusText}>내용임</Text>
+            <Text style={styles.component3Text}>라이프 패턴</Text>
+            <Text style={styles.statusText}>심박 수: 75</Text>
+            <Text style={styles.statusText}>수면 시간: 8시간</Text>
             <View style={styles.component3layoutIcon}>
               <FontAwesome5 name="smile-wink" size={80} color="green" />
             </View>
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   scrollViewContent: {
-    maxHeight : '90%',
+    maxHeight: '90%',
   },
   userInfo: {
     flexDirection: 'column',

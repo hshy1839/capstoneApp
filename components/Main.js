@@ -36,9 +36,11 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
-        <Animated.View style={[styles.quoteContainer, { opacity: fadeAnim }]}>
-          <Text style={styles.quoteText}>{quotes[quoteIndex]}</Text>
-        </Animated.View>
+      <View style={styles.quoteContainer}>
+          <Animated.Text style={[styles.quoteText, { opacity: fadeAnim }]}>
+            {quotes[quoteIndex]}
+          </Animated.Text>
+        </View>
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
           <TouchableOpacity style={styles.component1}>
@@ -118,7 +120,7 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: '#FFDAB9',
   },
   content: {
     maxHeight : '90%',
