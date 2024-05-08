@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaVi
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 import Header from './Header';
 import Footer from './Footer';
 import quotes from './Quotes'; // quotes.js에서 명언 데이터 가져오기
@@ -10,9 +12,17 @@ import fonts from './Font';
 
 
 const Main = () => {
+  const navigation = useNavigation();
   const fadeAnim = useRef(new Animated.Value(0)).current; // 애니메이션을 위한 값 설정
   const [quoteIndex, setQuoteIndex] = useState(0);
 
+  const goToPost = () => {
+    navigation.navigate('Post');
+  };
+  const goToSurvey = () => {
+    navigation.navigate('DepressionSurvey');
+  };
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       // 명언 변경
@@ -53,14 +63,13 @@ const Main = () => {
               </Text>
             </View>
           </TouchableOpacity>
-          <View style={styles.component2Background} />
-          <TouchableOpacity style={styles.component2}>
+          <TouchableOpacity style={styles.component2} onPress={goToPost}>
             <View style={styles.component2layout}>
               <View style={styles.component2layoutIcon}>
               <FontAwesome5 name="smile-wink" size={26} color="black" />
               </View>
               <Text style={styles.component2Text}>
-                Smile
+                게시판
               </Text>
             </View>
           </TouchableOpacity>
@@ -101,7 +110,7 @@ const Main = () => {
               </Text>
               </TouchableOpacity>
               <View style={styles.depressionTestBackground} />
-        <TouchableOpacity style={styles.depressionTest}>
+        <TouchableOpacity style={styles.depressionTest} onPress={goToSurvey}>
         <View style={styles.depressionTestLayout} />
               <View style={styles.depressionTestLayoutIcon}>
               <AntDesign name="form" size={26} color="black" />

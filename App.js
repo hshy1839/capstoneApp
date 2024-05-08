@@ -8,6 +8,9 @@ import Profile from './components/Profile';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Myinfo from './components/Myinfo';
+import Post from './components/Post';
+import PostDetail from './components/PostDetail';
+import DepressionSurvey from './components/DepressionSurvey';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +24,9 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{header: () => <Header />}} />
         <Stack.Screen name="Signup" component={Signup} options={{header: () => <Header />}} />
         <Stack.Screen name="Myinfo" component={Myinfo} options={{header: () => <Header />}} />
+        <Stack.Screen name="Post" component={Post} options={{header: () => <Header />}} />
+        <Stack.Screen name="PostDetail" component={PostDetail} options={{header: () => <Header />}} />
+        <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{header: () => <Header />}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
