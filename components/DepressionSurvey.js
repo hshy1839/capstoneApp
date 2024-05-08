@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
 
 const DepressionSurvey = () => {
+
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
   });
 
-  const [answers, setAnswers] = useState({});
+  const [page, setPage] = useState(-1); // 페이지 인덱스를 상태로 관리
+  const [score, setScore] = useState(0); // 점수를 상태로 관리
 
-  const handleOptionSelect = (questionId, option) => {
-    setAnswers({ ...answers, [questionId]: option });
-  };
-
-  if (!loaded) {
-    return null;
-  }
+  const questionsPerPage = 4; // 한 페이지에 보여질 질문 수
 
   const questions = [
     {
@@ -123,6 +119,124 @@ const DepressionSurvey = () => {
     },
   ];
 
+  // 현재 페이지에 보여질 질문들을 계산합니다.
+  const startIndex = page * questionsPerPage;
+  const endIndex = startIndex + questionsPerPage;
+  const questionsToShow = questions.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const handleStartSurvey = () => {
+    setPage(0); // 시작하기 버튼을 누르면 첫 번째 질문 페이지로 이동
+  };
+
+  const isLastPage = page === Math.ceil(questions.length / questionsPerPage) - 1;
+
+  const [answers, setAnswers] = useState({});
+
+
+  const handleOptionSelect = (questionId, option) => {
+    const question = questions.find(q => q.id === questionId);
+    const prevOption = answers[questionId];
+    let prevScore = 0;
+    let newScore = 0;
+  
+    // 이전에 선택한 옵션과 해당하는 점수 계산
+    if (prevOption) {
+      if (questionId === 4 || questionId === 8 || questionId === 12 || questionId === 16) {
+        switch (prevOption) {
+          case '극히 드물다\n(0~1일)':
+            prevScore = -1;
+            break;
+          case '가끔\n(1~2일)':
+            prevScore = -2;
+            break;
+          case '자주\n(3~4일)':
+            prevScore = -3;
+            break;
+          case '거의 대부분\n(5~7일)':
+            prevScore = -4;
+            break;
+          default:
+            break;
+        }
+      } else {
+        switch (prevOption) {
+          case '극히 드물다\n(0~1일)':
+            prevScore = 1;
+            break;
+          case '가끔\n(1~2일)':
+            prevScore = 2;
+            break;
+          case '자주\n(3~4일)':
+            prevScore = 3;
+            break;
+          case '거의 대부분\n(5~7일)':
+            prevScore = 4;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  
+    // 새로운 옵션과 해당하는 점수 계산
+    if (questionId === 4 || questionId === 8 || questionId === 12 || questionId === 16) {
+      switch (option) {
+        case '극히 드물다\n(0~1일)':
+          newScore = -1;
+          break;
+        case '가끔\n(1~2일)':
+          newScore = -2;
+          break;
+        case '자주\n(3~4일)':
+          newScore = -3;
+          break;
+        case '거의 대부분\n(5~7일)':
+          newScore = -4;
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (option) {
+        case '극히 드물다\n(0~1일)':
+          newScore = 1;
+          break;
+        case '가끔\n(1~2일)':
+          newScore = 2;
+          break;
+        case '자주\n(3~4일)':
+          newScore = 3;
+          break;
+        case '거의 대부분\n(5~7일)':
+          newScore = 4;
+          break;
+        default:
+          break;
+      }
+    }
+  
+    // 중복 감점 방지를 위한 조건 추가
+    let updatedScore = score;
+    updatedScore = score - prevScore + newScore;
+  
+    // 점수 및 선택한 옵션 저장
+    setScore(updatedScore);
+    setAnswers({ ...answers, [questionId]: option });
+  };
+  
+  
+
+  const handleSubmission = () => {
+    // 최종 점수 계산
+    let finalScore = score;
+    // 최종 점수 출력 또는 다른 작업 수행
+    console.log('최종 점수:', finalScore);
+  };
+
   const OptionButton = ({ questionId, option }) => {
     return (
       <TouchableOpacity
@@ -143,24 +257,62 @@ const DepressionSurvey = () => {
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
           <View style={styles.component1}>
-            <Text style={styles.component1Text}>우울증 설문조사</Text>
-            {questions.map((question) => (
-              <View key={question.id} style={styles.questionContainer}>
-                <Text style={styles.questionText}>{question.title}</Text>
-                <View style={styles.optionsContainer}>
-                  {question.options.map((option, index) => (
-                    <View key={index} style={styles.optionContainer}>
-                      <OptionButton questionId={question.id} option={option} />
-                      <Text style={styles.optionText}>{option}</Text>
-                    </View>
-                  ))}
-                </View>
+            {page === -1 ? ( // 초기 페이지
+              <View style={styles.initialPage}>
+                <Text style={styles.initialText}>이 검사는 CES-D 라는 공식 우울증 검사에요</Text>
+                <Image source={require('../assets/profile.jpg')} style={styles.Image} />
+                <TouchableOpacity
+                  style={styles.startButton}
+                  onPress={handleStartSurvey}
+                >
+                  <Text style={styles.buttonText}>시 작 하 기</Text>
+                </TouchableOpacity>
               </View>
-            ))}
-            
-          <TouchableOpacity style={styles.surveyButton}>
-          <Text style={styles.buttonText}>제출하기</Text>
-        </TouchableOpacity>
+            ) : (
+              // 질문 페이지
+              <>
+                <Text style={styles.component1Text}>우울증 설문조사</Text>
+                {questionsToShow.map((question, index) => (
+                  <View key={index} style={styles.questionContainer}>
+                    <Text style={styles.questionText}>{question.title}</Text>
+                    <View style={styles.optionsContainer}>
+                      {question.options.map((option, index) => (
+                        <View key={index} style={styles.optionContainer}>
+                          <OptionButton questionId={question.id} option={option} />
+                          <Text style={styles.optionText}>{option}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                ))}
+                <View style={styles.buttonContainer}>
+                  {page !== 0 && (
+                    <TouchableOpacity
+                      style={styles.surveyButton}
+                      onPress={() => setPage(page - 1)}
+                    >
+                      <Text style={styles.buttonText}>이전</Text>
+                    </TouchableOpacity>
+                  )}
+                  {isLastPage ? (
+                    <TouchableOpacity
+                      style={styles.surveyButton}
+                      onPress={handleSubmission}
+                    >
+                      <Text style={styles.buttonText}>제출</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.surveyButton}
+                      onPress={handleNextPage}
+                      disabled={isLastPage}
+                    >
+                      <Text style={styles.buttonText}>다음</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -211,8 +363,30 @@ const styles = StyleSheet.create({
     top: -15,
     marginLeft: -10,
     fontFamily: 'SpaceGroteskBold',
-    marginBottom : 40,
-    marginTop : 10,
+    marginBottom: 40,
+    marginTop: 10,
+  },
+  initialPage: {
+    alignItems: 'center',
+    height: 700,
+    padding: 30,
+  },
+  initialText: {
+    fontSize: 30,
+    marginBottom: 20,
+    fontFamily: 'SpaceGroteskRegular',
+    fontWeight: 'bold',
+  },
+  startButton: {
+    backgroundColor: '#0095f6',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 100,
+  },
+  startButtonText: {
+    color: 'white',
+    fontFamily: 'SpaceGroteskBold',
   },
   questionContainer: {
     marginBottom: 20,
@@ -225,7 +399,7 @@ const styles = StyleSheet.create({
   optionsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height : 100,
+    height: 100,
   },
   optionContainer: {
     alignItems: 'center',
@@ -247,32 +421,35 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceGroteskBold',
     color: 'black',
     textAlign: 'center',
-    marginTop: 10,
-  },
-  innerCircle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'black', // Change color as needed
+    marginTop: 5,
   },
   surveyButton: {
-    borderColor : 'black',
-    borderWidth : 1.5,
-    width: '80%',
+    borderColor: 'black',
+    borderWidth: 1.5,
+    width: '50%',
     height: 50,
     backgroundColor: '#0095f6',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     marginBottom: 10,
-    fontFamily : 'SpaceGroteskBold',
-    marginLeft : 30,
+    fontFamily: 'SpaceGroteskBold',
+    marginLeft: 5,
   },
   buttonText: {
     fontSize: 18,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
     color: 'white',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  Image: {
+    padding: 20,
+    width: 300,
+    height: 400,
+  }
 });
 
 export default DepressionSurvey;

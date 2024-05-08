@@ -12,6 +12,7 @@ import Post from './components/Post';
 import PostDetail from './components/PostDetail';
 import DepressionSurvey from './components/DepressionSurvey';
 
+
 const Stack = createStackNavigator();
 
 export default function App() {
