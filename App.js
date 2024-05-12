@@ -12,6 +12,7 @@ import Post from './components/Post';
 import PostDetail from './components/PostDetail';
 import DepressionSurvey from './components/DepressionSurvey';
 import SurveyScore from './components/SurveyScore';
+import SentimentAnalysis from './components/SentimentAnalysis '
 
 
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ export default function App() {
         <Stack.Screen name="PostDetail" component={PostDetail} options={{header: () => <Header />}} />
         <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{header: () => <Header />}} />
         <Stack.Screen name="SurveyScore" component={SurveyScore} options={{header: () => <Header />}} />
+        <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{header: () => <Header />}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

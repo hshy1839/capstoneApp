@@ -25,6 +25,9 @@ const Footer = () => {
   const gotoLogin = () => {
     navigation.navigate('Login');
   }
+  const gotoSentiment = () => {
+    navigation.navigate('SentimentAnalysis');
+  }
 
   return (
     <View style={[styles.footer, styles.fixedFooter]}>
@@ -36,7 +39,7 @@ const Footer = () => {
       <View style={styles.addCircle}>
         <View style={styles.blackCircle} />
         <TouchableOpacity
-          onPress={gotoLogin}
+          onPress={gotoSentiment}
           style={[styles.menuItem, styles.addCircleContent]}
           activeOpacity={1} // 터치될 때 투명해지는 효과 제거
         >
