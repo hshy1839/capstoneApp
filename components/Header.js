@@ -10,6 +10,9 @@ const Header = () => {
   const goBack = () => {
     navigation.goBack();
   };
+  const goToLogin = () => {
+    navigation.navigate('Login');
+  };
   
   return (
     <View style={styles.header}>
@@ -21,6 +24,9 @@ const Header = () => {
         </TouchableOpacity>
       )}
       <Text style={styles.headerTitle}>Buddy       </Text>
+      <TouchableOpacity style={styles.accountButton} onPress={goToLogin}>
+        <Ionicons name="person-circle-outline" size={40} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -45,6 +51,11 @@ const styles = StyleSheet.create({
   backButton: {
     marginTop: 20,
     marginRight: 10, // 뒤로가기 버튼과의 간격을 조정
+  },
+  accountButton : {
+    marginTop : 18,
+    marginLeft : 'auto',
+    marginRight : 10,
   },
 });
 
