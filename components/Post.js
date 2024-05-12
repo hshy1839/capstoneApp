@@ -19,14 +19,14 @@ const Board = ({ navigation }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   // 게시물 목록
   const posts = [
-    { id: 1, title: '안웃으면 만원드림 ㅋㅋㅋㅋ', content: '형들 이거보셈 ㅋㅋㅋ' },
-    { id: 2, title: '더우면 개추', content: '목돌아간 흑우없제?' },
-    { id: 3, title: '닝라ㅜ니아루달', content: 'ㅈㄱㄴ' },
-    { id: 4, title: '식권삽니다', content: '장당 3000원 쿨거 ㄱㄱ' },
-    { id: 5, title: '안웃으면 만원드림 ㅋㅋㅋㅋ', content: '형들 이거보셈 ㅋㅋㅋ' },
-    { id: 6, title: '더우면 개추', content: '목돌아간 흑우없제?' },
-    { id: 7, title: '닝라ㅜ니아루달', content: 'ㅈㄱㄴ' },
-    { id: 8, title: '식권삽니다', content: '장당 3000원 쿨거 ㄱㄱ' },
+    { id: 1, title: '우울해요', content: '너무 힘들어요' },
+    { id: 2, title: '배고파요', content: '배고파서 힘이안나요 어떡하나요?' },
+    { id: 3, title: '테스트 제목이에요', content: '테스트 내용이에요' },
+    { id: 4, title: '행복이란 뭘까', content: '뭔지 모르겠어 진짜' },
+    { id: 5, title: '우울해요', content: '너무 힘들어요' },
+    { id: 6, title: '저녁 뭐먹음 다들?', content: '저녁 메뉴 추천 좀 받을게' },
+    { id: 7, title: '테스트 제목이에요', content: '테스트 내용이에요' },
+    { id: 8, title: '테스트 제목이에요', content: '테스트 내용이에요' },
     // 필요한 만큼 게시물을 추가할 수 있습니다.
   ];
 

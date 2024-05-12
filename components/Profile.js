@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   component2Text: {
+    marginTop : 15,
     fontSize: 30,
     fontFamily: 'SpaceGroteskBold',
   },
@@ -157,11 +158,12 @@ const styles = StyleSheet.create({
     flexDirection :"column",
   },
   component3Text: {
+    marginTop : 15,
     fontSize: 30,
     fontFamily: 'SpaceGroteskBold',
   },
   checkMyinfo : {
-    marginTop : 5,
+    marginTop : 15,
     marginLeft : 'auto',
     backgroundColor : '#0095f6',
     borderWidth : 1.5,
@@ -170,13 +172,13 @@ const styles = StyleSheet.create({
   myinfoBtn: {
     backgroundColor: 'transparent', // 배경색 투명으로 설정
     paddingHorizontal: 10, // 텍스트 주변의 가로 여백
-    paddingVertical: 5, 
+    paddingVertical: 8, 
     color : 'white',
     fontFamily : 'SpaceGroteskBold',
     fontSize : 16,
   },
   checkLifeCycle : {
-    marginTop : 5,
+    marginTop : 20,
     marginLeft : 'auto',
     backgroundColor : '#0095f6',
     borderWidth : 1.5,
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
   lifecycleBtn: {
     backgroundColor: 'transparent', // 배경색 투명으로 설정
     paddingHorizontal: 10, // 텍스트 주변의 가로 여백
-    paddingVertical: 5, 
+    paddingVertical: 8, 
     color : 'white',
     fontFamily : 'SpaceGroteskBold',
     fontSize : 16,

@@ -24,6 +24,7 @@ const Main = () => {
   };
  
   useEffect(() => {
+
     const interval = setInterval(() => {
       // 명언 변경
       Animated.timing(fadeAnim, {
@@ -46,6 +47,11 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
+      <View style={styles.appIntro}>
+        <Text style={styles.appIntroText}>BUDDY와 함께하는</Text>
+        <Text style={styles.appIntroText2}>우울퇴치</Text>
+      </View>
+      <View style={styles.contentAdd}>
       <View style={styles.quoteContainer}>
           <Animated.Text style={[styles.quoteText, { opacity: fadeAnim }]}>
             {quotes[quoteIndex]}
@@ -120,6 +126,7 @@ const Main = () => {
               </Text>
               </TouchableOpacity>
         </View>
+        </View>
       </ScrollView>
       <Footer />
     </View>
@@ -129,12 +136,37 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFDAB9',
+    backgroundColor: 'gainsboro',
   },
   content: {
     maxHeight : '90%',
+  },
+  contentAdd : {
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  appIntro : {
+    width : '100%',
+    height : 250,
+    backgroundColor : 'orange',
+    borderBottomWidth : 1.5,
+    borderBottomColor : 'black',
+    flexDirection : 'column',
+  },
+  appIntroText : {
+    marginTop : 85,
+    fontSize : 36,
+    fontFamily : 'SpaceGroteskBold',
+    textAlign : 'right',
+    paddingHorizontal : 20,
+    color : 'white',
+  },
+  appIntroText2 : {
+    fontSize : 36,
+    fontFamily : 'SpaceGroteskBold',
+    textAlign : 'right',
+    paddingHorizontal : 20,
+    color : 'white',
   },
   quoteBackgroundContainer: {
     backgroundColor: 'black',
@@ -154,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     width: '95%',
-    height: 120,
+    height: 80,
     padding: 20,
     marginBottom: 10,
     borderWidth: 1.5,
@@ -162,9 +194,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   quoteText: {
-    fontFamily: 'BlackHanSansRegular',
+    fontFamily: 'SpaceGroteskBold',
     textAlign: 'center',
-    fontSize: 23,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   component1Background: {
