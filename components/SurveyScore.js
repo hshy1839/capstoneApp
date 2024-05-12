@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Footer from './Footer';
 
 const SurveyScore = ({ score }) => {
 
@@ -8,31 +9,29 @@ const SurveyScore = ({ score }) => {
     const goToHome = () => {
         navigation.navigate('Main');
     };
-    const goToSurvey = () => {
-        navigation.navigate('DepressionSurvey');
-      };
+
   return (
     <View style={styles.container}>
-        <View style = {styles.scoreBackground}></View>
-        <View style = {styles.scoreContainer}>
-      <Text style={styles.title}>귀하의 우울증(CES-D)</Text>
-      <Text style={styles.scoreText}>검진 결과는 {score} 점</Text>
-      <Text style={styles.message}>
-        {score <= 15
-          ? '정상입니다.'
-          : score <= 20
-          ? '보통수준으로 스트레스 관리가 필요합니다.'
-          : score <= 24
-          ? '주의가 필요한 수준으로, 2주 이상 지속된다면 전문의 상담이 필요합니다.'
-          : '매우 심각한 수준으로 반드시 정신건강의학과 전문의 상담과 도움이 필요합니다.'}
-      </Text>
-      <TouchableOpacity style={styles.backButton}  onPress={goToHome}>
-        <Text style={styles.backButtonText}>홈으로</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backButtonText}>저장 하기</Text>
-      </TouchableOpacity>
-      </View>
+        <View style={styles.scoreBackground}></View>
+        <View style={styles.scoreContainer}>
+            <Text style={styles.title}>귀하의 우울증(CES-D)</Text>
+            <Text style={styles.scoreText}>검진 결과는 {score} 점</Text>
+            <Text style={styles.message}>
+                {score <= 15
+                ? '정상입니다.'
+                : score <= 20
+                ? '보통수준으로 스트레스 관리가 필요합니다.'
+                : score <= 24
+                ? '주의가 필요한 수준으로, 2주 이상 지속된다면 전문의 상담이 필요합니다.'
+                : '매우 심각한 수준으로 반드시 정신건강의학과 전문의 상담과 도움이 필요합니다.'}
+            </Text>
+            <TouchableOpacity style={styles.backButton}  onPress={goToHome}>
+                <Text style={styles.backButtonText}>홈으로</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.backButton}>
+                <Text style={styles.backButtonText}>저장 하기</Text>
+            </TouchableOpacity>
+        </View>
     </View>
   );
 };
@@ -40,7 +39,7 @@ const SurveyScore = ({ score }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff44',
+    backgroundColor: 'mediumturquoise',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,

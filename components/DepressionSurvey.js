@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, useNavigation } from 'react-native';
-=======
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
->>>>>>> 29d299faed985bb7ec9c0f1f68f4c674675fcd26
+import { useNavigation, useRoute } from '@react-navigation/native'; // 중복 import 제거
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
@@ -244,11 +240,9 @@ const DepressionSurvey = () => {
   const handleSubmission = () => {
     // 최종 점수 계산
     const finalScore = score;
-    // 최종 점수 출력 또는 다른 작업 수행
 
     console.log('최종 점수:', finalScore);
-    navigation.navigate('SurveyResult');
-    // 점수 제출 여부 상태를 업데이트
+    navigation.navigate('SurveyScore', { score });
     setScoreSubmitted(true);
   };
 
@@ -269,8 +263,6 @@ const DepressionSurvey = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
-
-      
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
           {!scoreSubmitted && (
@@ -332,9 +324,6 @@ const DepressionSurvey = () => {
               </>
             )}    
           </View>)}
-          {scoreSubmitted && (
-            <View><SurveyScore score={score} /></View>
-          )}
         </View>
       </ScrollView>
       <Footer />
@@ -470,7 +459,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 300,
     height: 400,
-  }
+  },
 });
 
 export default DepressionSurvey;

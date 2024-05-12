@@ -11,7 +11,6 @@ import Myinfo from './components/Myinfo';
 import Post from './components/Post';
 import PostDetail from './components/PostDetail';
 import DepressionSurvey from './components/DepressionSurvey';
-import SurveyResult from './components/SurveyResult';
 import SurveyScore from './components/SurveyScore';
 import SentimentAnalysis from './components/SentimentAnalysis';
 import Diary from './components/Diary';
@@ -32,7 +31,6 @@ export default function App() {
         <Stack.Screen name="Post" component={Post} options={{header: () => <Header />}} />
         <Stack.Screen name="PostDetail" component={PostDetail} options={{header: () => <Header />}} />
         <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{header: () => <Header />}} />
-        <Stack.Screen name="SurveyResult" component={SurveyResult} options={{header: () => <Header />}} />
         <Stack.Screen name="SurveyScore" component={SurveyScore} options={{header: () => <Header />}} />
         <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{header: () => <Header />}} />
         <Stack.Screen name="Diary" component={Diary} options={{header: () => <Header />}} />

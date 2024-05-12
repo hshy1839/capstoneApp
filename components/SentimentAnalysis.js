@@ -8,7 +8,7 @@ const SentimentAnalysis = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const gotoDiary = () => {
-    navigation.navigate('Diary');
+    navigation.navigate('Diary', { selectedDate });
   }
 
   return (
@@ -17,6 +17,7 @@ const SentimentAnalysis = () => {
         <CalendarPicker
           selectedStartDate={selectedDate}
           selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
         />
       </View>
       <View style={styles.diaryLog}>

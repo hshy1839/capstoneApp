@@ -56,10 +56,10 @@ const Main = () => {
           <TouchableOpacity style={styles.component1}>
             <View style={styles.component1layout}>
               <View style={styles.component1layoutIcon}>
-              <Ionicons name="game-controller-outline" size={26} color="black" />
+              <Ionicons name="settings-outline" size={26} color="black" />
               </View>
               <Text style={styles.component1Text}>
-                Contents
+                Settings
               </Text>
             </View>
           </TouchableOpacity>
