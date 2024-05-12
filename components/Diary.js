@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const SentimentAnalysis = () => {
+const Diary = () => {
   const [diaryContent, setDiaryContent] = useState('');
   const [sentiment, setSentiment] = useState(null);
   const client_id = "aa"; //z5hgn2e6c1
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SentimentAnalysis;
+export default Diary;
