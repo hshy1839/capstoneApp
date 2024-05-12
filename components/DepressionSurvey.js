@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native'; // 중복 im
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
-import SurveyScore from './SurveyScore';
 
 const DepressionSurvey = () => {
 

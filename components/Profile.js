@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, Animated } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
@@ -12,56 +12,70 @@ const Profile = () => {
     SpaceGroteskBold: fonts.spaceGroteskBold,
   });
 
-  if (!loaded) {
-    return null;
-  }
-
   const navigation = useNavigation();
   const onPressMyInfo = () => {
     navigation.navigate('Myinfo'); // MyInfo 스크린으로 이동
   };
+
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 2000, // 2초 동안 애니메이션 진행
+        useNativeDriver: true, // 네이티브 드라이버 사용
+      }
+    ).start();
+  }, []);
+
+  if (!loaded) {
+    return null;
+  }
+
   const user = {
-    username: 'jeongmin',
-    profileImage: require('../assets/profile.jpg'),
-    followers: 1000,
-    following: 500,
-    userposts: 3,
+    username: '정민',
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <View style={styles.userInfo}>
-          <Image source={user.profileImage} style={styles.profileImage} />
-          <Text style={styles.username}>{user.username}</Text>
+          <Animated.Text style={[styles.username, { opacity: fadeAnim }]}>안녕하세요</Animated.Text>
+          <Animated.Text style={[styles.username, { opacity: fadeAnim }]}>{user.username} 님</Animated.Text>
         </View>
         <View style={styles.stats}></View>
         <View style={styles.componentContainer}>
-          <View style={styles.component1Background} />
-          <TouchableOpacity style={styles.component1}>
+          <View style={styles.component1}>
             <Text style={styles.component1Text}>Status</Text>
-            <Text style={styles.statusText}>Fucking Great!</Text>
-            <View style={styles.component1layoutIcon}>
-              <FontAwesome5 name="smile-wink" size={80} color="green" />
+            <View style={styles.iconContainer}>
+            <View style={styles.smileyIcons}>
+              <FontAwesome5 name="smile" size={70} color="green" />
+              <Text style={styles.testText}>CES-D 검사</Text>
             </View>
-          </TouchableOpacity>
-          <View style={styles.component2Background} />
-          <TouchableOpacity style={styles.component2} onPress={onPressMyInfo}>
+            <View style={styles.smileyIcons}>
+              <FontAwesome5 name="smile" size={70} color="green" />
+              <Text style={styles.testText}>생활 패턴</Text>
+            </View>
+            <View style={styles.smileyIcons}>
+              <FontAwesome5 name="smile" size={70} color="green" />
+              <Text style={styles.testText}>감정 일기</Text>
+            </View>
+            </View>
+          </View>
+          <View style={styles.component2} >
             <Text style={styles.component2Text}>내 정보</Text>
-            <Text style={styles.statusText}>내용임</Text>
-            <View style={styles.component2layoutIcon}>
-              <FontAwesome5 name="smile-wink" size={80} color="green" />
-            </View>
-          </TouchableOpacity>
-          <View style={styles.component3Background} />
-          <TouchableOpacity style={styles.component3}>
+            <TouchableOpacity style= {styles.checkMyinfo} onPress={onPressMyInfo}>
+              <Text style = {styles.myinfoBtn}>확인하기</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.component3}>
             <Text style={styles.component3Text}>라이프 패턴</Text>
-            <Text style={styles.statusText}>심박 수: 75</Text>
-            <Text style={styles.statusText}>수면 시간: 8시간</Text>
-            <View style={styles.component3layoutIcon}>
-              <FontAwesome5 name="smile-wink" size={80} color="green" />
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.checkLifeCycle}>
+              <Text style={styles.lifecycleBtn}>확인하기</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
       <Footer />
@@ -72,160 +86,126 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: 'cornflowerblue',
   },
   scrollViewContent: {
     maxHeight: '90%',
   },
   userInfo: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 150,
-    height: 150,
-    marginLeft: '30%',
-    marginTop: '5%',
-    borderRadius: 20,
-    borderColor: 'black',
-    borderWidth: 1.5,
-    backgroundColor: 'white',
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginTop: 12,
+    flex:1,
+    marginTop : 50,
   },
   username: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  stats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 20,
-    width: 340,
-    left: 10,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-  },
-  statsText: {
-    color: 'black',
+    fontSize: 40,
+    fontFamily : 'SpaceGroteskBold',
+    color: 'white',
+    textAlign : 'left',
+    marginLeft : 20,
   },
   componentContainer: {
     flexDirection: 'column', // 세로 정렬
     justifyContent: 'space-between', // 요소들 간 간격을 동일하게 배치
-    marginTop: 20,
-  },
-  component1Background: {
-    backgroundColor: 'black',
-    width: '90%',
-    height: 135,
-    zIndex: -1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 5,
-    left: 20,
+    marginTop: 50,
+    backgroundColor : 'white',
+    borderTopStartRadius : 30,
+    borderWidth : 2.5,
+    borderColor : 'black',
   },
   component1: {
-    backgroundColor: '#ffffcc',
-    borderRadius: 10,
+    borderRadius: 0,
     width: '90%',
-    height: 135,
+    height : '40%',
     padding: 20,
     marginBottom: 20,
-    borderWidth: 1.5,
-    borderColor: 'black',
+    marginTop : 10,
     left: 15,
-  },
-  component1layoutIcon: {
-    width: '100%',
-    height: 100,
-    top: -190,
-    left: 190,
+    flexDirection: 'column',
   },
   component1Text: {
-    fontSize: 30,
-    width: '100%',
-    height: 100,
-    top: -15,
+    fontSize: 40,
     marginLeft: -10,
     fontFamily: 'SpaceGroteskBold',
+    color : 'black',
   },
-  statusText: {
+  statusText1: {
+    marginTop : 108,
     fontSize: 20,
-    width: '100%',
-    height: 100,
-    top: -50,
-    left: 50,
     fontFamily: 'SpaceGroteskBold',
-  },
-  component2Background: {
-    backgroundColor: 'black',
-    width: '90%',
-    height: 135,
-    zIndex: -1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    marginTop: 180,
-    left: 20,
+    color : 'black',
   },
   component2: {
-    backgroundColor: '#3399ff',
-    borderRadius: 10,
-    width: '90%',
-    height: 135,
-    padding: 20,
-    marginBottom: 20,
-    borderWidth: 1.5,
+    width: '100%',
+    padding: 6,
+    borderTopWidth: 1.5,
     borderColor: 'black',
     marginTop: 20,
-    left: 15,
+    flexDirection: 'row',
   },
   component2Text: {
     fontSize: 30,
-    width: '100%',
-    height: 100,
-    top: -15,
-    marginLeft: -10,
     fontFamily: 'SpaceGroteskBold',
   },
-  component3Background: {
-    backgroundColor: 'black',
-    width: '90%',
-    height: 135,
-    zIndex: -1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    marginTop: 355,
-    left: 20,
-  },
   component3: {
-    backgroundColor: 'orange',
-    borderRadius: 10,
-    width: '90%',
-    height: 135,
-    padding: 20,
-    marginBottom: 40, // 여백 추가
-    borderWidth: 1.5,
+    width: '100%',
+    padding: 6,
+    marginBottom: 70, // 여백 추가
+    borderTopWidth: 1.5,
     borderColor: 'black',
-    marginTop: 20,
-    left: 15,
+    flexDirection: 'row',
+  },
+  text3Container : {
+    flexDirection :"column",
   },
   component3Text: {
     fontSize: 30,
-    width: '100%',
-    height: 100,
-    top: -15,
-    marginLeft: -10,
     fontFamily: 'SpaceGroteskBold',
   },
+  checkMyinfo : {
+    marginTop : 5,
+    marginLeft : 'auto',
+    backgroundColor : '#0095f6',
+    borderWidth : 1.5,
+    borderRadius : 5,
+  },
+  myinfoBtn: {
+    backgroundColor: 'transparent', // 배경색 투명으로 설정
+    paddingHorizontal: 10, // 텍스트 주변의 가로 여백
+    paddingVertical: 5, 
+    color : 'white',
+    fontFamily : 'SpaceGroteskBold',
+    fontSize : 16,
+  },
+  checkLifeCycle : {
+    marginTop : 5,
+    marginLeft : 'auto',
+    backgroundColor : '#0095f6',
+    borderWidth : 1.5,
+    borderRadius : 5,
+  },
+  lifecycleBtn: {
+    backgroundColor: 'transparent', // 배경색 투명으로 설정
+    paddingHorizontal: 10, // 텍스트 주변의 가로 여백
+    paddingVertical: 5, 
+    color : 'white',
+    fontFamily : 'SpaceGroteskBold',
+    fontSize : 16,
+  },
+  smileyIcons: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginRight : '20%',
+    marginLeft : '-10%',
+    marginTop : 30,
+  },
+  testText: {
+    marginLeft: 5,
+    fontSize: 26,
+    fontFamily: 'SpaceGroteskBold',
+    color: 'black',
+  },
+  iconContainer : {
+    flexDirection : 'row',
+  }
 });
 
 export default Profile;
