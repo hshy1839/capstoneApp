@@ -8,22 +8,31 @@ const SurveyScore = ({ score }) => {
     const goToHome = () => {
         navigation.navigate('Main');
     };
+    const goToSurvey = () => {
+        navigation.navigate('DepressionSurvey');
+      };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>우울증 검사 결과</Text>
-      <Text style={styles.scoreText}>최종 점수: {score}</Text>
+        <View style = {styles.scoreBackground}></View>
+        <View style = {styles.scoreContainer}>
+      <Text style={styles.title}>귀하의 우울증(CES-D)</Text>
+      <Text style={styles.scoreText}>검진 결과는 {score} 점</Text>
       <Text style={styles.message}>
-        {score <= 10
-          ? '우울증 증상이 거의 없는 것으로 판단됩니다. 하지만 지속적인 우울감이나 다른 어려움이 있을 경우 전문가와 상담하는 것이 좋습니다.'
+        {score <= 15
+          ? '정상입니다.'
           : score <= 20
-          ? '우울증 증상이 경미한 것으로 판단됩니다. 주의 깊은 관찰과 일상적인 스트레스 관리가 필요합니다.'
-          : score <= 30
-          ? '우울증 증상이 중간 정도로 판단됩니다. 전문가와 상담하여 추가적인 조치를 취하는 것이 좋습니다.'
-          : '우울증 증상이 심각한 것으로 판단됩니다. 즉시 전문가와 상담하는 것이 필요합니다.'}
+          ? '보통수준으로 스트레스 관리가 필요합니다.'
+          : score <= 24
+          ? '주의가 필요한 수준으로, 2주 이상 지속된다면 전문의 상담이 필요합니다.'
+          : '매우 심각한 수준으로 반드시 정신건강의학과 전문의 상담과 도움이 필요합니다.'}
       </Text>
       <TouchableOpacity style={styles.backButton}  onPress={goToHome}>
         <Text style={styles.backButtonText}>홈으로</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.backButton}>
+        <Text style={styles.backButtonText}>저장 하기</Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -40,28 +49,59 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: 'SpaceGroteskBold',
     marginBottom: 20,
+    textAlign : 'center',
+    marginTop : 50
   },
   scoreText: {
-    fontSize: 24,
-    fontFamily: 'SpaceGroteskRegular',
+    fontSize: 30,
+    fontFamily: 'SpaceGroteskBold',
     marginBottom: 20,
+    textAlign : 'center',
   },
   message: {
-    fontSize: 18,
-    fontFamily: 'SpaceGroteskRegular',
+    fontSize: 30,
+    fontFamily: 'SpaceGroteskBold',
     textAlign: 'center',
     marginBottom: 40,
   },
   backButton: {
+    borderColor : 'black',
+    borderWidth : 1.5,
+    width: '80%',
+    height: 50,
     backgroundColor: '#0095f6',
-    paddingHorizontal: 30,
-    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
+    marginBottom: 10,
+    fontFamily : 'SpaceGroteskBold',
+    marginLeft : '10%',
   },
   backButtonText: {
+    fontSize: 18,
+    fontFamily : 'SpaceGroteskBold',
     color: 'white',
-    fontFamily: 'SpaceGroteskBold',
   },
+  scoreContainer : {
+    backgroundColor : 'white',
+    width : '100%',
+    height : 500,
+    borderWidth : 1.5,
+    borderColor : 'black',
+    borderRadius : 15,
+  },
+  scoreBackground : {
+    backgroundColor: 'black',
+    width: '100%',
+    height: 500,
+    zIndex: -1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 30,
+    left: 25,
+  }
 });
 
 export default SurveyScore;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,19 +13,17 @@ const SentimentAnalysis = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.calendar}>
-          <CalendarPicker
-            selectedStartDate={selectedDate}
-            selectedDate={selectedDate}
-          />
-        </View>
-        <View style={styles.diaryLog}>
-          <TouchableOpacity onPress={gotoDiary} style={styles.addDiaryBtn}>
-            <Text style={styles.buttonText}>감정 일기장 쓰기</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      <View style={styles.calendar}>
+        <CalendarPicker
+          selectedStartDate={selectedDate}
+          selectedDate={selectedDate}
+        />
+      </View>
+      <View style={styles.diaryLog}>
+        <TouchableOpacity onPress={gotoDiary} style={styles.addDiaryBtn}>
+          <Text style={styles.buttonText}>감정 일기장 쓰기</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -37,10 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollView: {
-    flex: 1,
-    width: '100%',
-  },
   addDiaryBtn: {
     borderColor: 'black',
     borderWidth: 1.5,
@@ -51,18 +45,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     marginTop: 30,
+    marginLeft : '10%',
   },
   buttonText: {
     fontSize: 18,
     color: 'white',
   },
   calendar: {
+    flex: 1,
     width: '100%',
     backgroundColor: 'white',
   },
   diaryLog: {
+    flex: 1,
     width: '100%',
-    backgroundColor: 'blue',
+    backgroundColor: 'whitesmoke',
   },
 });
 
