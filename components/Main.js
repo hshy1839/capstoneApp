@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { StyleSheet, Text, Linking , View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
+import { Ionicons, AntDesign, Feather, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-
 import Header from './Header';
 import Footer from './Footer';
 import quotes from './Quotes'; // quotes.js에서 명언 데이터 가져오기
@@ -18,6 +15,9 @@ const Main = () => {
 
   const goToPost = () => {
     navigation.navigate('Post');
+  };
+  const goToHomepage = () => {
+    Linking.openURL('http://3.37.54.62/');
   };
   const goToSurvey = () => {
     navigation.navigate('DepressionSurvey');
@@ -76,13 +76,13 @@ const Main = () => {
         </View>
         <View style={styles.componentContainer2}>
           <View style={styles.component1Background} />
-          <TouchableOpacity style={styles.component1}>
+          <TouchableOpacity style={styles.component1} onPress={goToHomepage}>
             <View style={styles.component3layout}>
               <View style={styles.component3layoutIcon}>
-                <AntDesign name="caretright" size={26} color="white" />
+              <Entypo name="home" size={26} color="black" />
               </View>
               <Text style={styles.component3Text}>
-                Youtube
+                HomePage
               </Text>
             </View>
           </TouchableOpacity>
@@ -270,14 +270,14 @@ const styles = StyleSheet.create({
   },
   component3Text: {
     fontSize: 25,
-    width: '100%',
+    width: '120%',
     height: 100,
     top: -55,
     marginLeft: -10,
     fontFamily: 'SpaceGroteskBold',
   },
   component3layout: {
-    backgroundColor: 'red',
+    backgroundColor: 'orangered',
     borderRadius: 10,
     width: '136%',
     height: 60,

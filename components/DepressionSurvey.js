@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, useNavigation } from 'react-native';
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
 
 const DepressionSurvey = () => {
+
+  const navigation = useNavigation();
 
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
@@ -234,7 +236,9 @@ const DepressionSurvey = () => {
     // 최종 점수 계산
     let finalScore = score;
     // 최종 점수 출력 또는 다른 작업 수행
+
     console.log('최종 점수:', finalScore);
+    navigation.navigate('SurveyResult');
   };
 
   const OptionButton = ({ questionId, option }) => {
@@ -260,7 +264,7 @@ const DepressionSurvey = () => {
             {page === -1 ? ( // 초기 페이지
               <View style={styles.initialPage}>
                 <Text style={styles.initialText}>이 검사는 CES-D 라는 공식 우울증 검사에요</Text>
-                <Image source={require('../assets/profile.jpg')} style={styles.Image} />
+                <Image source={require('../assets/buddy.jpeg')} style={styles.Image} />
                 <TouchableOpacity
                   style={styles.startButton}
                   onPress={handleStartSurvey}
@@ -324,7 +328,7 @@ const DepressionSurvey = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff44',
+    backgroundColor: 'mediumturquoise',
   },
   scrollViewContent: {
     maxHeight: '90%',
