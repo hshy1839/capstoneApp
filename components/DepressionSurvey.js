@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native'; // 중복 import 제거
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
+import SurveyScore from './SurveyScore';
 
 const DepressionSurvey = () => {
 
   const navigation = useNavigation();
-
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
@@ -134,7 +134,6 @@ const DepressionSurvey = () => {
   };
 
   const handleStartSurvey = () => {
-    
     setPage(0); // 시작하기 버튼을 누르면 첫 번째 질문 페이지로 이동
   };
 
@@ -239,9 +238,9 @@ const DepressionSurvey = () => {
   const handleSubmission = () => {
     // 최종 점수 계산
     const finalScore = score;
-
+    // 최종 점수 출력 또는 다른 작업 수행
     console.log('최종 점수:', finalScore);
-    navigation.navigate('SurveyScore', { score });
+    // 점수 제출 여부 상태를 업데이트
     setScoreSubmitted(true);
   };
 
@@ -262,8 +261,9 @@ const DepressionSurvey = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
+
+      
         <View style={styles.componentContainer}>
-          <View style={styles.component1Background} />
           {!scoreSubmitted && (
           <View style={styles.component1}>
             {page === -1 ? ( // 초기 페이지
@@ -280,7 +280,7 @@ const DepressionSurvey = () => {
             ) : (
               // 질문 페이지
               <>
-                <Text style={styles.component1Text}>우울증 설문조사</Text>
+                <Text style={styles.component1Text}>CES-D 검사</Text>
                 {questionsToShow.map((question, index) => (
                   <View key={index} style={styles.questionContainer}>
                     <Text style={styles.questionText}>{question.title}</Text>
@@ -323,6 +323,9 @@ const DepressionSurvey = () => {
               </>
             )}    
           </View>)}
+          {scoreSubmitted && (
+            <View><SurveyScore score={score} /></View>
+          )}
         </View>
       </ScrollView>
       <Footer />
@@ -343,27 +346,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
   },
-  component1Background: {
-    backgroundColor: 'black',
-    width: '90%',
-    height: 3400,
-    zIndex: -1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 5,
-    left: 20,
-  },
   component1: {
     backgroundColor: 'white',
     borderRadius: 10,
     width: '90%',
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 50,
     borderWidth: 1.5,
     borderColor: 'black',
     left: 15,
+    height : '89%',
   },
   component1Text: {
     fontSize: 40,
@@ -374,6 +366,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SpaceGroteskBold',
     marginBottom: 40,
     marginTop: 10,
+    textAlign : 'center',
   },
   initialPage: {
     alignItems: 'center',
@@ -391,7 +384,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 5,
-    marginTop: 100,
+    marginTop: 80, 
   },
   startButtonText: {
     color: 'white',
@@ -457,8 +450,8 @@ const styles = StyleSheet.create({
   Image: {
     padding: 20,
     width: 300,
-    height: 400,
-  },
+    height: 300,
+  }
 });
 
 export default DepressionSurvey;
