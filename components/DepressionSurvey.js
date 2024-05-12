@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, useNavigation } from 'react-native';
+=======
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+>>>>>>> 29d299faed985bb7ec9c0f1f68f4c674675fcd26
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
+import SurveyScore from './SurveyScore';
 
 const DepressionSurvey = () => {
 
@@ -15,6 +21,8 @@ const DepressionSurvey = () => {
 
   const [page, setPage] = useState(-1); // 페이지 인덱스를 상태로 관리
   const [score, setScore] = useState(0); // 점수를 상태로 관리
+  const [scoreSubmitted, setScoreSubmitted] = useState(false); // 점수 제출 여부를 나타내는 상태
+
 
   const questionsPerPage = 4; // 한 페이지에 보여질 질문 수
 
@@ -131,6 +139,7 @@ const DepressionSurvey = () => {
   };
 
   const handleStartSurvey = () => {
+    
     setPage(0); // 시작하기 버튼을 누르면 첫 번째 질문 페이지로 이동
   };
 
@@ -234,11 +243,13 @@ const DepressionSurvey = () => {
 
   const handleSubmission = () => {
     // 최종 점수 계산
-    let finalScore = score;
+    const finalScore = score;
     // 최종 점수 출력 또는 다른 작업 수행
 
     console.log('최종 점수:', finalScore);
     navigation.navigate('SurveyResult');
+    // 점수 제출 여부 상태를 업데이트
+    setScoreSubmitted(true);
   };
 
   const OptionButton = ({ questionId, option }) => {
@@ -258,8 +269,11 @@ const DepressionSurvey = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
+
+      
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
+          {!scoreSubmitted && (
           <View style={styles.component1}>
             {page === -1 ? ( // 초기 페이지
               <View style={styles.initialPage}>
@@ -316,8 +330,11 @@ const DepressionSurvey = () => {
                   )}
                 </View>
               </>
-            )}
-          </View>
+            )}    
+          </View>)}
+          {scoreSubmitted && (
+            <View><SurveyScore score={score} /></View>
+          )}
         </View>
       </ScrollView>
       <Footer />
