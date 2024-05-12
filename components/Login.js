@@ -23,7 +23,7 @@ const Login = ({ onLogin }) => {
     <View style={styles.container}>
          <View style={styles.backgroundContainer} />
       <View style={styles.loginContainer}>
-        <Text style={styles.title}>Hongjeongmin</Text>
+        <Text style={styles.title}>Buddy</Text>
         {/* <View style={styles.usernameInputContainer} /> */}
         <TextInput
           style={styles.input}

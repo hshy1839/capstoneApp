@@ -10,6 +10,8 @@ import fonts from './Font';
 
 const Main = () => {
   const navigation = useNavigation();
+  const fadeAnimAppIntroText = useRef(new Animated.Value(0)).current; // AppIntroText 애니메이션을 위한 값 설정
+  const fadeAnimAppIntroText2 = useRef(new Animated.Value(0)).current; // AppIntroText2 애니메이션을 위한 값 설정
   const fadeAnim = useRef(new Animated.Value(0)).current; // 애니메이션을 위한 값 설정
   const [quoteIndex, setQuoteIndex] = useState(0);
 
@@ -24,32 +26,44 @@ const Main = () => {
   };
  
   useEffect(() => {
+    // AppIntroText 애니메이션
+    Animated.timing(fadeAnimAppIntroText, {
+        toValue: 1, // 투명도를 1로 설정하여 페이드 인
+        duration: 1000, // 애니메이션 지속 시간
+        useNativeDriver: true,
+    }).start();
+    Animated.timing(fadeAnimAppIntroText2, {
+        toValue: 1, // 투명도를 1로 설정하여 페이드 인
+        duration: 1500, // 애니메이션 지속 시간
+        useNativeDriver: true,
+    }).start();
+  }, []);
 
+  useEffect(() => {
     const interval = setInterval(() => {
-      // 명언 변경
+      setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length); // 인덱스 증가
       Animated.timing(fadeAnim, {
-        toValue: 0, // 투명도를 0으로 설정하여 페이드 아웃
-        duration: 500, // 애니메이션 지속 시간
+        toValue: 1, // 투명도를 0으로 설정하여 페이드 아웃
+        duration: 3000, // 애니메이션 지속 시간
         useNativeDriver: true,
       }).start(() => {
-        setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length); // 인덱스 증가
+        
         Animated.timing(fadeAnim, {
-          toValue: 1, // 투명도를 1로 설정하여 페이드 인
-          duration: 500, // 애니메이션 지속 시간
+          toValue: 0, // 투명도를 1로 설정하여 페이드 인
+          duration: 1500, // 애니메이션 지속 시간
           useNativeDriver: true,
         }).start();
       });
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval); // 언마운트될 때 인터벌 정리
   }, [fadeAnim]);
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
       <View style={styles.appIntro}>
-        <Text style={styles.appIntroText}>BUDDY와 함께하는</Text>
-        <Text style={styles.appIntroText2}>우울퇴치</Text>
+      <Animated.Text style={[styles.appIntroText, { opacity: fadeAnimAppIntroText }]}>BUDDY와 함께하는</Animated.Text>
+                    <Animated.Text style={[styles.appIntroText2, { opacity: fadeAnimAppIntroText2 }]}>우울퇴치</Animated.Text>
       </View>
       <View style={styles.contentAdd}>
       <View style={styles.quoteContainer}>

@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // 세로 정렬
     justifyContent: 'space-between', // 요소들 간 간격을 동일하게 배치
     marginTop: 20,
+    marginBottom : 30,
   },
   component1Background: {
     backgroundColor: 'black',
