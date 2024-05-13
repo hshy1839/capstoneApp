@@ -67,7 +67,7 @@ const Board = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'whitesmoke',
   },
   searchBar: {
     flexDirection: 'row',
@@ -84,17 +84,18 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginRight: 10,
+    backgroundColor : 'white',
   },
   searchButton: {
     padding: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#0095f6',
     borderRadius: 5,
   },
   scrollViewContent: {
     padding: 5,
   },
   postContainer: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     padding: 10,
     borderColor: 'black',
   },

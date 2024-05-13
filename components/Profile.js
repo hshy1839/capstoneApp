@@ -103,14 +103,15 @@ const styles = StyleSheet.create({
     marginLeft : 20,
   },
   componentContainer: {
-    flexDirection: 'column', // 세로 정렬
-    justifyContent: 'space-between', // 요소들 간 간격을 동일하게 배치
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     marginTop: 50,
-    backgroundColor : 'white',
-    borderTopStartRadius : 30,
-    borderWidth : 2.5,
-    borderColor : 'black',
-  },
+    backgroundColor: 'white',
+    borderTopStartRadius: 30,
+    borderWidth: 2.5,
+    borderColor: 'black',
+    paddingHorizontal: 15,
+  },  
   component1: {
     borderRadius: 0,
     width: '90%',
@@ -135,9 +136,9 @@ const styles = StyleSheet.create({
   },
   component2: {
     width: '100%',
-    padding: 6,
     borderTopWidth: 1.5,
     borderColor: 'black',
+    paddingHorizontal : 10,
     marginTop: 20,
     flexDirection: 'row',
   },
@@ -149,10 +150,11 @@ const styles = StyleSheet.create({
   component3: {
     width: '100%',
     padding: 6,
-    marginBottom: 70, // 여백 추가
+    marginBottom: 40, // 여백 추가
     borderTopWidth: 1.5,
     borderColor: 'black',
     flexDirection: 'row',
+    paddingHorizontal : 10,
   },
   text3Container : {
     flexDirection :"column",

@@ -385,6 +385,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 80, 
+    borderWidth : 1.5,
+    borderColor : 'black',
   },
   startButtonText: {
     color: 'white',
