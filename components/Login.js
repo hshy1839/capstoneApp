@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // 네비게이션 훅 추가
 import { useFonts } from 'expo-font';
 import Footer from './Footer';
+import axios from 'axios';
+import Header from './Header';
 
-const Login = ({ onLogin }) => {
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation(); // 네비게이션 객체 생성
 
-  const handleLogin = () => {
-    console.log('username :', username);
-    console.log('Password:', password);
-    navigation.navigate('Main');
+  const handleLogin = async() => {
+    try {
+      const response = await axios.post('http://192.168.0.52:3000/api/android/login', {
+        username: username,
+        password: password
+      });
+      
+      if (response.status === 200) {
+        // 로그인 성공 시 Main 화면으로 이동
+        navigation.navigate('Main');
+      } else {
+        Alert.alert('Login failed', 'Invalid username or password');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Login failed', 'Please check your username or password');
+    }
   };
-
   const handleSignup = () => {
-    navigation.navigate('Signup'); // Signup 페이지로 이동
+    navigation.navigate('Signup');
   };
 
   return (
@@ -24,14 +38,12 @@ const Login = ({ onLogin }) => {
          <View style={styles.backgroundContainer} />
       <View style={styles.loginContainer}>
         <Text style={styles.title}>Buddy</Text>
-        {/* <View style={styles.usernameInputContainer} /> */}
         <TextInput
           style={styles.input}
           placeholder="아이디"
           value={username}
           onChangeText={setUsername}
         />
-        {/* <View style={styles.passwordInputContainer} /> */}
         <TextInput
           style={styles.input}
           placeholder="비밀번호"

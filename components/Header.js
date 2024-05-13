@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Login from './Login';
 
-const Header = () => {
+const Header = ({isLoggedIn}) => {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -24,9 +25,11 @@ const Header = () => {
         </TouchableOpacity>
       )}
       <Text style={styles.headerTitle}>Buddy       </Text>
-      <TouchableOpacity style={styles.accountButton} onPress={goToLogin}>
-        <Ionicons name="person-circle-outline" size={40} color="black" />
-      </TouchableOpacity>
+      {isLoggedIn !== true && (
+        <TouchableOpacity style={styles.accountButton} onPress={goToLogin}>
+          <Ionicons name="person-circle-outline" size={40} color="black" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
