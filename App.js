@@ -14,6 +14,7 @@ import DepressionSurvey from './components/DepressionSurvey';
 import SurveyScore from './components/SurveyScore';
 import SentimentAnalysis from './components/SentimentAnalysis';
 import Diary from './components/Diary';
+import Setting from './components/Setting';
 
 
 const Stack = createStackNavigator();
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="SurveyScore" component={SurveyScore} options={{header: () => <Header />}} />
         <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{header: () => <Header />}} />
         <Stack.Screen name="Diary" component={Diary} options={{header: () => <Header />}} />
+        <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

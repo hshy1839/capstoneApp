@@ -24,6 +24,9 @@ const Main = () => {
   const goToSurvey = () => {
     navigation.navigate('DepressionSurvey');
   };
+  const goToSetting = () => {
+    navigation.navigate('Setting');
+  };
  
   useEffect(() => {
     // AppIntroText 애니메이션
@@ -73,7 +76,7 @@ const Main = () => {
         </View>
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
-          <TouchableOpacity style={styles.component1}>
+          <TouchableOpacity style={styles.component1} onPress={goToSetting}>
             <View style={styles.component1layout}>
               <View style={styles.component1layoutIcon}>
               <Ionicons name="settings-outline" size={26} color="black" />

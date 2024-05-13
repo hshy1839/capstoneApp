@@ -5,11 +5,14 @@ import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
 
-const ProfileInfo = ({ label, value }) => {
+const ProfileInfo = ({ label, value, children }) => {
   return (
     <View style={styles.profileInfoContainer}>
       <Text style={styles.profileInfoLabel}>{label}</Text>
-      <Text style={styles.profileInfoValue}>{value}</Text>
+      <View style={styles.profileInfoContent}>
+        <Text style={styles.profileInfoValue}>{value}</Text>
+        {children}
+      </View>
     </View>
   );
 };
@@ -38,26 +41,21 @@ const Profile = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
-        <View style={styles.userInfo}>
-          <Image source={user.profileImage} style={styles.profileImage} />
-          <Text style={styles.username}>{user.username}</Text>
-        </View>
-        <View style={styles.stats}></View>
         <View style={styles.componentContainer}>
           <View style={styles.component1Background} />
           <View style={styles.component1}>
             <Text style={styles.component1Text}>내 정보</Text>
             <ProfileInfo label="이름" value={user.username} />
-            <ProfileInfo label="비밀번호" value={user.password} >
-                <TouchableOpacity style = {styles.passwordBtn}>
-                    <Text style={styles.passwordBtnText}>수정</Text>
-                    </TouchableOpacity>
+            <ProfileInfo label="비밀번호" value={user.password}>
+              <TouchableOpacity style={styles.passwordBtn}>
+                <Text style={styles.passwordBtnText}>수정</Text>
+              </TouchableOpacity>
             </ProfileInfo>
             <ProfileInfo label="전화번호" value={user.phoneNumber} />
             <ProfileInfo label="이메일" value={user.email} />
             <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.buttonText}>수정하기</Text>
-        </TouchableOpacity>
+              <Text style={styles.buttonText}>수정하기</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -66,6 +64,7 @@ const Profile = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,29 +72,6 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     maxHeight : '90%',
-  },
-  userInfo: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 150,
-    height: 150,
-    marginLeft: '30%',
-    marginTop: '5%',
-    borderRadius: 20,
-    borderColor: 'black',
-    borderWidth: 1.5,
-    backgroundColor: 'white',
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginTop: 12,
-  },
-  username: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
   },
   stats: {
     flexDirection: 'row',
@@ -133,7 +109,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 500,
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     borderWidth: 1.5,
     borderColor: 'black',
     left: 15,
@@ -167,7 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     borderWidth: 1,
-    marginTop : 15,
+    marginTop: 15,
     borderColor: 'black',
   },
   profileInfoLabel: {
@@ -175,9 +151,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
+  profileInfoContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   profileInfoValue: {
     fontSize: 20,
     color: 'black',
+    marginRight: 10, // 값과 수정 버튼 사이의 간격 조정
   },
   loginButton: {
     borderColor : 'black',
@@ -189,7 +170,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     fontFamily : 'SpaceGroteskBold',
-    marginTop : 100,
+    marginTop : 80,
+    marginBottom : 20,
   },
   loginBtnContainer : {
     backgroundColor: 'black',
@@ -208,6 +190,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily : 'SpaceGroteskBold',
     color: 'white',
+  },
+  passwordBtn: {
+    backgroundColor: '#ccc',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  passwordBtnText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'SpaceGroteskBold',
   },
 });
 
