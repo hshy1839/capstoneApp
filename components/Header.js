@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Login from './Login';
 
-const Header = ({isLoggedIn}) => {
+const Header = ({isLoggedIn, setIsLoggedIn}) => {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -25,7 +25,7 @@ const Header = ({isLoggedIn}) => {
         </TouchableOpacity>
       )}
       <Text style={styles.headerTitle}>Buddy       </Text>
-      {isLoggedIn !== true && (
+      {!isLoggedIn && (
         <TouchableOpacity style={styles.accountButton} onPress={goToLogin}>
           <Ionicons name="person-circle-outline" size={40} color="black" />
         </TouchableOpacity>

@@ -11,16 +11,17 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation(); // 네비게이션 객체 생성
 
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     try {
       const response = await axios.post('http://192.168.0.52:3000/api/android/login', {
         username: username,
         password: password
       });
-      
+
       if (response.status === 200) {
         // 로그인 성공 시 Main 화면으로 이동
         navigation.navigate('Main');
+        setIsLoggedIn(true);
       } else {
         Alert.alert('Login failed', 'Invalid username or password');
       }
@@ -35,7 +36,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <View style={styles.container}>
-         <View style={styles.backgroundContainer} />
+      <View style={styles.backgroundContainer} />
       <View style={styles.loginContainer}>
         <Text style={styles.title}>Buddy</Text>
         <TextInput
@@ -51,11 +52,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           value={password}
           onChangeText={setPassword}
         />
-        <View style = {styles.loginBtnContainer}/>
+        <View style={styles.loginBtnContainer} />
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <View style = {styles.signupBtnContainer}/>
+        <View style={styles.signupBtnContainer} />
         <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
@@ -72,18 +73,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#dddddd',
   },
-  backgroundContainer : {
-    backgroundColor : 'black',
-    top : 100,
-    width : 300,
-    height : 400,
-    borderRadius : 20,
-    right : 24,
-    zIndex : -1,
+  backgroundContainer: {
+    backgroundColor: 'black',
+    top: 100,
+    width: 300,
+    height: 400,
+    borderRadius: 20,
+    right: 24,
+    zIndex: -1,
     position: 'absolute',
   },
-  loginContainer : {
-    marginTop : -100,
+  loginContainer: {
+    marginTop: -100,
     width: 300,
     height: 400,
     backgroundColor: 'white',
@@ -95,36 +96,36 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     marginBottom: 30,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
   },
-  usernameInputContainer :{
+  usernameInputContainer: {
     backgroundColor: 'black',
     width: '80%',
     height: 50,
-    zIndex : -2,
+    zIndex: -2,
     borderRadius: 5,
     borderWidth: 1.5,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position : 'absolute',
-    top : 110,
-    right : 25,
+    position: 'absolute',
+    top: 110,
+    right: 25,
   },
-  passwordInputContainer : {
+  passwordInputContainer: {
     backgroundColor: 'black',
     width: '80%',
     height: 50,
-    zIndex : -2,
+    zIndex: -2,
     borderRadius: 5,
     borderWidth: 1.5,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position : 'absolute',
-    top : 180,
-    right : 25,
+    position: 'absolute',
+    top: 180,
+    right: 25,
   },
   input: {
-    backgroundColor : 'white',
+    backgroundColor: 'white',
     width: '80%',
     height: 50,
     borderWidth: 1,
@@ -133,11 +134,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
     fontSize: 16,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
   },
   loginButton: {
-    borderColor : 'black',
-    borderWidth : 1.5,
+    borderColor: 'black',
+    borderWidth: 1.5,
     width: '80%',
     height: 50,
     backgroundColor: '#0095f6',
@@ -145,37 +146,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     marginBottom: 10,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
   },
-  loginBtnContainer : {
+  loginBtnContainer: {
     backgroundColor: 'black',
     width: '80%',
     height: 50,
-    zIndex : -1,
+    zIndex: -1,
     borderRadius: 5,
     borderWidth: 1.5,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position : 'absolute',
-    top : 250,
-    right : 25,
+    position: 'absolute',
+    top: 250,
+    right: 25,
   },
-  signupBtnContainer : {
+  signupBtnContainer: {
     backgroundColor: 'black',
     width: '80%',
     height: 50,
-    zIndex : -1,
+    zIndex: -1,
     borderRadius: 5,
     borderWidth: 1.5,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position : 'absolute',
-    top : 310,
-    right : 25,
+    position: 'absolute',
+    top: 310,
+    right: 25,
   },
   signupButton: {
-    borderColor : 'black',
-  borderWidth : 1.5,
+    borderColor: 'black',
+    borderWidth: 1.5,
     width: '80%',
     height: 50,
     backgroundColor: '#ccc', // 회원가입 버튼 색상 변경
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
     color: 'white',
   },
 });
