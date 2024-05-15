@@ -26,30 +26,29 @@ export default function App() {
     const fetchIsLoggedIn = async () => {
       try {
         const storedIsLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-        if (storedIsLoggedIn !== null) {
+        if (storedIsLoggedIn) {
           setIsLoggedIn(JSON.parse(storedIsLoggedIn));
         }
       } catch (error) {
         console.error('Error fetching isLoggedIn value:', error);
       }
     };
-
-    fetchIsLoggedIn();
+  
+    fetchIsLoggedIn(); // 비동기 함수 호출
   }, []);
-
 
   const handleLogin = async (loginStatus) => {
     try {
-      setIsLoggedIn(loginStatus);
+      setIsLoggedIn(loginStatus); // 로그인 상태 설정
       console.log(loginStatus);
-      await AsyncStorage.setItem('isLoggedIn', JSON.stringify(loginStatus));
+      await AsyncStorage.setItem('isLoggedIn', JSON.stringify(loginStatus)); // AsyncStorage에 로그인 상태 저장
       console.log("Login status stored successfully.");
-      console.log(isLoggedIn);
+      console.log('Stored login status:', await AsyncStorage.getItem('isLoggedIn'));
     } catch (error) {
       console.error('Error storing login status:', error);
     }
   };
-
+  
   return (
     <NavigationContainer>
       <StatusBar style="auto" />

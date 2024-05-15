@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert  } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import Footer from './Footer';
 import SurveyScore from './SurveyScore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DepressionSurvey = () => {
 
@@ -17,6 +18,7 @@ const DepressionSurvey = () => {
   const [page, setPage] = useState(-1); // 페이지 인덱스를 상태로 관리
   const [score, setScore] = useState(0); // 점수를 상태로 관리
   const [scoreSubmitted, setScoreSubmitted] = useState(false); // 점수 제출 여부를 나타내는 상태
+  
 
 
   const questionsPerPage = 4; // 한 페이지에 보여질 질문 수
@@ -123,18 +125,19 @@ const DepressionSurvey = () => {
       options: ['극히 드물다\n(0~1일)', '가끔\n(1~2일)', '자주\n(3~4일)', '거의 대부분\n(5~7일)'],
     },
   ];
-
   // 현재 페이지에 보여질 질문들을 계산합니다.
   const startIndex = page * questionsPerPage;
   const endIndex = startIndex + questionsPerPage;
   const questionsToShow = questions.slice(startIndex, endIndex);
-
+  
+  
   const handleNextPage = () => {
     setPage(page + 1);
   };
 
   const handleStartSurvey = () => {
     setPage(0); // 시작하기 버튼을 누르면 첫 번째 질문 페이지로 이동
+    
   };
 
   const isLastPage = page === Math.ceil(questions.length / questionsPerPage) - 1;

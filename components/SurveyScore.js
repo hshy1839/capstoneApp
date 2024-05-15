@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const SurveyScore = ({ score }) => {
     const navigation = useNavigation();
     const goToHome = () => {
         navigation.navigate('Main');
     };
-    const goToSurvey = () => {
-        navigation.navigate('DepressionSurvey');
-    };
 
     // 스코어에 따른 문구
     const [scoreMessage, setScoreMessage] = useState('');
-    // 애니메이션을 위한 Opacity 값
     const [fadeAnim] = useState(new Animated.Value(0));
     const [fadeScoreText] = useState(new Animated.Value(0));
 
@@ -24,10 +22,10 @@ const SurveyScore = ({ score }) => {
             score <= 15
                 ? '정상입니다.'
                 : score <= 20
-                ? '보통수준으로 스트레스 관리가 필요합니다.'
-                : score <= 24
-                ? '주의가 필요한 수준으로, 2주 이상 지속된다면 전문의 상담이 필요합니다.'
-                : '매우 심각한 수준으로 반드시 정신건강의학과 전문의 상담과 도움이 필요합니다.'
+                    ? '보통수준으로 스트레스 관리가 필요합니다.'
+                    : score <= 24
+                        ? '주의가 필요한 수준으로, 2주 이상 지속된다면 전문의 상담이 필요합니다.'
+                        : '매우 심각한 수준으로 반드시 정신건강의학과 전문의 상담과 도움이 필요합니다.'
         );
         // fadeIn 애니메이션 적용
         Animated.sequence([
@@ -50,6 +48,31 @@ const SurveyScore = ({ score }) => {
         ]).start();
     }, [score, fadeAnim, fadeScoreText]);
 
+    const [userData, setUserData] = useState({
+        SurveyScore: '',
+      });
+      const saveScore = async () => {
+        try {
+          const response = await axios.post('http://192.168.0.52:3000/api/buddy/score/surveyscore', userData);
+      
+          if (response.status === 200) {
+            const user = response.data;
+            if (user) {
+              if (user.is_active = 1) {
+                navigation.navigate('Main'); // 메인 화면으로 이동
+                alert('저장됨 !!'); // 회원가입 성공시 환영 메시지 출력
+              } else {
+                alert('안저장됨');
+              }
+            } else {
+              alert('저장 실패');
+            }
+          }
+        } catch (error) {
+          console.error('저장 오류:', error);
+        }
+      };
+
     return (
         <View style={styles.container}>
             <View style={styles.scoreBackground}></View>
@@ -62,7 +85,7 @@ const SurveyScore = ({ score }) => {
                 <TouchableOpacity style={styles.backButton} onPress={goToHome}>
                     <Text style={styles.backButtonText}>홈으로</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.backButton}>
+                <TouchableOpacity style={styles.backButton} onPress={saveScore}>
                     <Text style={styles.backButtonText}>저장 하기</Text>
                 </TouchableOpacity>
             </View>
@@ -90,7 +113,7 @@ const styles = StyleSheet.create({
         fontFamily: 'SpaceGroteskBold',
         marginBottom: 20,
         textAlign: 'center',
-        marginTop : 40,
+        marginTop: 40,
     },
     message: {
         fontSize: 28,

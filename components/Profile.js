@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaVi
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import fonts from './Font';
 import Footer from './Footer';
 
@@ -13,7 +14,16 @@ const Profile = () => {
   });
 
   const navigation = useNavigation();
-  const onPressMyInfo = () => {
+  const onPressMyInfo = async() => {
+  
+      try {
+        // AsyncStorage에서 사용자 정보 삭제
+        await AsyncStorage.removeItem('userInfo');
+        // 프로필 페이지 다시 불러오기
+        fetchUserInfo();
+      } catch (error) {
+        console.error('사용자 정보 초기화에 실패했습니다:', error);
+      };
     navigation.navigate('Myinfo'); // MyInfo 스크린으로 이동
   };
 

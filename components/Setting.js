@@ -20,7 +20,6 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
         try {
             setIsLoggedIn(false);
             await AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
-            await AsyncStorage.removeItem();
             navigation.navigate('Login');
         } catch (error) {
             console.error('Error during logout:', error);
