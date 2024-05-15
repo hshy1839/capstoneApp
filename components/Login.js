@@ -19,7 +19,6 @@ const Login = ({ onLogin }) => {
       const response = await axios.post('http://192.168.0.52:3000/api/buddy/login', {
         username,
        password,
-        is_active: 1,
       });
   
       if (response.status === 200) {

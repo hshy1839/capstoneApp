@@ -54,8 +54,8 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" />
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={Main} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="Profile" component={Profile} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="Main" component={Main} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="Profile" component={Profile} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
         <Stack.Screen
           name="Login"
           options={{
@@ -65,15 +65,20 @@ export default function App() {
           {props => <Login {...props} onLogin={handleLogin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
         </Stack.Screen>
 
-        <Stack.Screen name="Signup" component={Signup} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="Myinfo" component={Myinfo} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="Post" component={Post} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="PostDetail" component={PostDetail} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="SurveyScore" component={SurveyScore} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="Diary" component={Diary} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
-        <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
+        <Stack.Screen name="Signup" component={Signup} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="Myinfo" component={Myinfo} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="Post" component={Post} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="PostDetail" component={PostDetail} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="SurveyScore" component={SurveyScore} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="Diary" component={Diary} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen
+          name="Setting"
+          options={{ headerShown: false }}
+        >
+          {props => <Setting {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -4,8 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Footer from './Footer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Setting = ({ }) => {
+const Setting = ({isLoggedIn, setIsLoggedIn }) => {
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -14,6 +15,16 @@ const Setting = ({ }) => {
     };
     const goToMyinfo = () => {
         navigation.navigate('Myinfo');
+    };
+    const handleLogout = async () => {
+        try {
+            setIsLoggedIn(false);
+            await AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
+            await AsyncStorage.removeItem();
+            navigation.navigate('Login');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
     };
 
     return (
@@ -38,7 +49,7 @@ const Setting = ({ }) => {
                 </TouchableOpacity>
 
                 <View style={styles.borderTop}></View>
-                <TouchableOpacity style = {styles.elementsContainer}>
+                <TouchableOpacity style = {styles.elementsContainer} onPress={handleLogout}>
                 <View style={styles.elements}>
                 <MaterialCommunityIcons name="exit-to-app" size={40} color="black" />
                 <Text style = {styles.accountText}>Logout</Text>

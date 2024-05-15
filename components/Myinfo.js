@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
+import axios from 'axios';
 import fonts from './Font';
 import Footer from './Footer';
 
-const ProfileInfo = ({ label, value,  editable, onChangeText }) => {
+const ProfileInfo = ({ label, value, editable, onChangeText }) => {
   return (
     <View style={styles.profileInfoContainer}>
       <Text style={styles.profileInfoLabel}>{label}</Text>
@@ -35,17 +36,28 @@ const Profile = () => {
   }
 
   const [userInfo, setUserInfo] = useState({
-    username: 'jeongmin',
-    password : '1111',
+    username: '',
+    password: '',
     profileImage: require('../assets/profile.jpg'),
-    followers: 1000,
-    following: 500,
-    userposts: 3,
-    phoneNumber: '010-8864-1839',
-    email: 'example@example.com',
+    email: '',
   });
 
   const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 사용자 정보를 가져오는 함수 호출
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.52:3000/api/buddy/userinfo');
+      const data = response.data;
+      setUserInfo(data);
+    } catch (error) {
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
 
   const toggleEditable = () => {
     setEditable(!editable);
@@ -60,7 +72,7 @@ const Profile = () => {
     toggleEditable(); // 수정 가능 상태 토글
   };
 
-  
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
@@ -82,14 +94,6 @@ const Profile = () => {
               editable={editable}
               onChangeText={(text) =>
                 setUserInfo((prevState) => ({ ...prevState, password: text }))
-              }
-            />
-            <ProfileInfo
-              label="전화번호"
-              value={userInfo.phoneNumber}
-              editable={editable}
-              onChangeText={(text) =>
-                setUserInfo((prevState) => ({ ...prevState, phoneNumber: text }))
               }
             />
             <ProfileInfo
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafad2',
   },
   scrollViewContent: {
-    maxHeight : '90%',
+    maxHeight: '90%',
   },
   stats: {
     flexDirection: 'row',
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // 세로 정렬
     justifyContent: 'space-between', // 요소들 간 간격을 동일하게 배치
     marginTop: 20,
-    marginBottom : 30,
+    marginBottom: 30,
   },
   component1Background: {
     backgroundColor: 'black',
@@ -214,47 +218,47 @@ const styles = StyleSheet.create({
     marginRight: 10, // 값과 수정 버튼 사이의 간격 조정
   },
   loginButton: {
-    borderColor : 'black',
-    borderWidth : 1.5,
+    borderColor: 'black',
+    borderWidth: 1.5,
     width: '100%',
     height: 50,
     backgroundColor: '#0095f6',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    fontFamily : 'SpaceGroteskBold',
-    marginTop : 80,
-    marginBottom : 20,
+    fontFamily: 'SpaceGroteskBold',
+    marginTop: 80,
+    marginBottom: 20,
   },
-  saveButton : {
-    borderColor : 'black',
-    borderWidth : 1.5,
+  saveButton: {
+    borderColor: 'black',
+    borderWidth: 1.5,
     width: '100%',
     height: 50,
     backgroundColor: '#0095f6',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    fontFamily : 'SpaceGroteskBold',
-    marginTop : 60,
-    marginBottom : 40,
+    fontFamily: 'SpaceGroteskBold',
+    marginTop: 60,
+    marginBottom: 40,
   },
-  loginBtnContainer : {
+  loginBtnContainer: {
     backgroundColor: 'black',
     width: '80%',
     height: 50,
-    zIndex : -1,
+    zIndex: -1,
     borderRadius: 5,
     borderWidth: 1.5,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    position : 'absolute',
-    top : 250,
-    right : 25,
+    position: 'absolute',
+    top: 250,
+    right: 25,
   },
   buttonText: {
     fontSize: 18,
-    fontFamily : 'SpaceGroteskBold',
+    fontFamily: 'SpaceGroteskBold',
     color: 'white',
   },
   passwordBtn: {
