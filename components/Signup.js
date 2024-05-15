@@ -3,21 +3,55 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useNavigation } from '@react-navigation/native'; // 네비게이션 훅 추가
 import { useFonts } from 'expo-font';
 import Footer from './Footer';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Signup = ({ }) => {
+  const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+    email: '',
+    name: '',
+    birthdate: '',
+    phoneNumber: '',
+    is_active: 1
+  });
+
+
   const navigation = useNavigation(); // 네비게이션 객체 생성
 
-  const handleLogin = () => {
-    console.log('username :', username);
-    console.log('Password:', password);
-    navigation.navigate('Main');
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('http://192.168.0.52:3000/api/buddy/signup', userData);
+  
+      if (response.status === 200) {
+        const user = response.data;
+        if (user) {
+          if (user.is_active = 1) {
+            navigation.navigate('Main'); // 메인 화면으로 이동
+            alert('환영해요 !!'); // 회원가입 성공시 환영 메시지 출력
+          } else {
+            alert('비활성화된 계정입니다.');
+          }
+        } else {
+          alert('회원가입에 실패했습니다.');
+        }
+      } else if (response.status === 401) {
+        const errorMessage = response.data;
+        if (errorMessage === '이미 존재하는 아이디입니다.') {
+          alert('이미 존재하는 아이디입니다.');
+        } else {
+          alert('회원가입에 실패했습니다.');
+        }
+      } else {
+        alert('서버 오류가 발생했습니다.');
+      }
+    } catch (error) {
+      console.error('회원가입 오류:', error);
+      alert('회원가입에 실패했습니다.');
+    }
   };
-
-  const handleSignup = () => {
-    navigation.navigate('Signup'); // Signup 페이지로 이동
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -27,30 +61,42 @@ const Login = ({ onLogin }) => {
         <TextInput
           style={styles.input}
           placeholder="아이디"
-          value={username}
-          onChangeText={setUsername}
+          value={userData.username}
+          onChangeText={(username) => setUserData(prevState => ({ ...prevState, username }))}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="이름"
+          value={userData.name}
+          onChangeText={(name) => setUserData(prevState => ({ ...prevState, name }))}
         />
         <TextInput
           style={styles.input}
           placeholder="비밀번호"
           secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
+          value={userData.password}
+          onChangeText={(password) => setUserData(prevState => ({ ...prevState, password }))}
         />
         <TextInput
           style={styles.input}
           placeholder="핸드폰"
-          value={username}
-          onChangeText={setUsername}
+          value={userData.phoneNumber}
+          onChangeText={(phoneNumber) => setUserData(prevState => ({ ...prevState, phoneNumber }))}
         />
         <TextInput
           style={styles.input}
           placeholder="이메일"
-          value={username}
-          onChangeText={setUsername}
+          value={userData.email}
+          onChangeText={(email) => setUserData(prevState => ({ ...prevState, email }))}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="생년 월 일"
+          value={userData.birthdate}
+          onChangeText={(birthdate) => setUserData(prevState => ({ ...prevState, birthdate }))}
         />
         <View style = {styles.loginBtnContainer}/>
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
           <Text style={styles.buttonText}>Join</Text>
         </TouchableOpacity>
       </View>
@@ -68,18 +114,18 @@ const styles = StyleSheet.create({
   },
   backgroundContainer : {
     backgroundColor : 'black',
-    top : 50,
+    top : 20,
     width : 300,
-    height : 500,
+    height : 570,
     borderRadius : 20,
     right : 24,
     zIndex : -1,
     position: 'absolute',
   },
   loginContainer : {
-    marginTop : -100,
+    marginTop : -80,
     width: 300,
-    height: 500,
+    height: 570,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1.5,
@@ -88,6 +134,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+    marginTop : 0,
     marginBottom: 30,
     fontFamily : 'SpaceGroteskBold',
   },
@@ -112,7 +159,7 @@ const styles = StyleSheet.create({
     borderColor: 'black', // 검은색 테두리 설정
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 5,
     fontSize: 16,
     fontFamily : 'SpaceGroteskBold',
   },
@@ -125,7 +172,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    marginBottom: 10,
+    marginTop: 30,
     fontFamily : 'SpaceGroteskBold',
   },
   loginBtnContainer : {
@@ -138,7 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     position : 'absolute',
-    top : 395,
+    top : 475,
     right : 28,
   },
   buttonText: {
@@ -148,4 +195,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Signup;
