@@ -67,7 +67,7 @@ const Board = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: "#fafad2",
   },
   searchBar: {
     flexDirection: 'row',

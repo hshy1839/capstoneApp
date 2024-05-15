@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   diaryLog: {
     flex: 1,
     width: '100%',
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#fafad2',
   },
 });
 

@@ -79,7 +79,7 @@ const Setting = ({ }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'whitesmoke',
+        backgroundColor: '#fafad2',
     },
     bodyContainer : {
         backgroundColor : 'white',

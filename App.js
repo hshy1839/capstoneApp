@@ -23,26 +23,30 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const getIsLoggedIn = async () => {
+    const fetchIsLoggedIn = async () => {
       try {
         const storedIsLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         if (storedIsLoggedIn !== null) {
           setIsLoggedIn(JSON.parse(storedIsLoggedIn));
         }
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching isLoggedIn value:', error);
       }
     };
 
-    getIsLoggedIn();
+    fetchIsLoggedIn();
   }, []);
+
 
   const handleLogin = async (loginStatus) => {
     try {
       setIsLoggedIn(loginStatus);
+      console.log(loginStatus);
       await AsyncStorage.setItem('isLoggedIn', JSON.stringify(loginStatus));
+      console.log("Login status stored successfully.");
+      console.log(isLoggedIn);
     } catch (error) {
-      console.error(error);
+      console.error('Error storing login status:', error);
     }
   };
 
@@ -50,17 +54,25 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" />
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={Main} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Profile" component={Profile} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Login" component={Login} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Signup" component={Signup} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Myinfo" component={Myinfo} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Post" component={Post} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="PostDetail" component={PostDetail} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="SurveyScore" component={SurveyScore} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
-        <Stack.Screen name="Diary" component={Diary} options={{ header: () => <Header />, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
+        <Stack.Screen name="Main" component={Main} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="Profile" component={Profile} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen
+          name="Login"
+          options={{
+            header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          }}
+        >
+          {props => <Login {...props} onLogin={handleLogin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+        </Stack.Screen>
+
+        <Stack.Screen name="Signup" component={Signup} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="Myinfo" component={Myinfo} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="Post" component={Post} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="PostDetail" component={PostDetail} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="DepressionSurvey" component={DepressionSurvey} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="SurveyScore" component={SurveyScore} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
+        <Stack.Screen name="Diary" component={Diary} options={{  header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }}/>
         <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false, isLoggedIn: isLoggedIn, setIsLoggedIn: setIsLoggedIn }} />
       </Stack.Navigator>
     </NavigationContainer>

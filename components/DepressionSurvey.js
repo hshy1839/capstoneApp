@@ -336,7 +336,7 @@ const DepressionSurvey = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'mediumturquoise',
+    backgroundColor: '#fafad2',
   },
   scrollViewContent: {
     maxHeight: '90%',

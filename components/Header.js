@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Login from './Login';
 
-const Header = ({isLoggedIn, setIsLoggedIn}) => {
+const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigation = useNavigation();
   const route = useRoute();
 

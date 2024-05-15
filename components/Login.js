@@ -5,31 +5,54 @@ import { useFonts } from 'expo-font';
 import Footer from './Footer';
 import axios from 'axios';
 import Header from './Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation(); // 네비게이션 객체 생성
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
     try {
-      const response = await axios.post('http://192.168.0.52:3000/api/android/login', {
-        username: username,
-        password: password
+      const response = await axios.post('http://192.168.0.52:3000/api/buddy/login', {
+        username,
+       password,
+        is_active: 1,
       });
-
+  
       if (response.status === 200) {
-        // 로그인 성공 시 Main 화면으로 이동
-        navigation.navigate('Main');
-        setIsLoggedIn(true);
+        const user = response.data;
+        if (user) {
+          if (user.is_active === 1) {
+            onLogin(true);
+            navigation.navigate('Main'); // 메인 화면으로 이동
+          } else {
+            alert('비활성화된 계정입니다.');
+          }
+        } else {
+          alert('아이디 또는 비밀번호를 확인하세요.');
+        }
+      } else if (response.status === 401) {
+        const errorMessage = response.data;
+        if (errorMessage === '아이디 또는 비밀번호가 올바르지 않습니다.') {
+          alert('아이디 또는 비밀번호를 확인하세요.');
+        } else if (errorMessage === '비활성화된 계정입니다') {
+          alert('비활성화된 계정입니다.');
+        } else {
+          alert('서버 오류가 발생했습니다.');
+        }
       } else {
-        Alert.alert('Login failed', 'Invalid username or password');
+        alert('서버 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error(error);
-      Alert.alert('Login failed', 'Please check your username or password');
+      console.error('로그인 오류:', error);
+      alert('아이디 또는 비밀번호가 올바르지 않습니다.');
     }
   };
+
+  
   const handleSignup = () => {
     navigation.navigate('Signup');
   };
@@ -71,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dddddd',
+    backgroundColor: '#fafad2',
   },
   backgroundContainer: {
     backgroundColor: 'black',

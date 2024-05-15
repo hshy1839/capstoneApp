@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, Linking , View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
+import { StyleSheet, Text, Linking, View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
 import { Ionicons, AntDesign, Feather, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
@@ -27,20 +27,7 @@ const Main = () => {
   const goToSetting = () => {
     navigation.navigate('Setting');
   };
- 
-  useEffect(() => {
-    // AppIntroText 애니메이션
-    Animated.timing(fadeAnimAppIntroText, {
-        toValue: 1, // 투명도를 1로 설정하여 페이드 인
-        duration: 1000, // 애니메이션 지속 시간
-        useNativeDriver: true,
-    }).start();
-    Animated.timing(fadeAnimAppIntroText2, {
-        toValue: 1, // 투명도를 1로 설정하여 페이드 인
-        duration: 1500, // 애니메이션 지속 시간
-        useNativeDriver: true,
-    }).start();
-  }, []);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,7 +37,7 @@ const Main = () => {
         duration: 3000, // 애니메이션 지속 시간
         useNativeDriver: true,
       }).start(() => {
-        
+
         Animated.timing(fadeAnim, {
           toValue: 0, // 투명도를 1로 설정하여 페이드 인
           duration: 1500, // 애니메이션 지속 시간
@@ -64,85 +51,85 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
-      <View style={styles.appIntro}>
-      <Animated.Text style={[styles.appIntroText, { opacity: fadeAnimAppIntroText }]}>BUDDY와 함께하는</Animated.Text>
-                    <Animated.Text style={[styles.appIntroText2, { opacity: fadeAnimAppIntroText2 }]}>우울퇴치</Animated.Text>
-      </View>
-      <View style={styles.contentAdd}>
-      <View style={styles.quoteContainer}>
-          <Animated.Text style={[styles.quoteText, { opacity: fadeAnim }]}>
-            {quotes[quoteIndex]}
-          </Animated.Text>
+        <View style={styles.appIntro}>
+          <Text style={styles.appIntroText}>BUDDY와 함께하는</Text>
+          <Text style={styles.appIntroText2}>우울퇴치</Text>
         </View>
-        <View style={styles.componentContainer}>
-          <View style={styles.component1Background} />
-          <TouchableOpacity style={styles.component1} onPress={goToSetting}>
-            <View style={styles.component1layout}>
-              <View style={styles.component1layoutIcon}>
-              <Ionicons name="settings-outline" size={26} color="black" />
+        <View style={styles.contentAdd}>
+          <View style={styles.quoteContainer}>
+            <Animated.Text style={[styles.quoteText, { opacity: fadeAnim }]}>
+              {quotes[quoteIndex]}
+            </Animated.Text>
+          </View>
+          <View style={styles.componentContainer}>
+            <View style={styles.component1Background} />
+            <TouchableOpacity style={styles.component1} onPress={goToSetting}>
+              <View style={styles.component1layout}>
+                <View style={styles.component1layoutIcon}>
+                  <Ionicons name="settings-outline" size={26} color="black" />
+                </View>
+                <Text style={styles.component1Text}>
+                  Settings
+                </Text>
               </View>
-              <Text style={styles.component1Text}>
-                Settings
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.component2} onPress={goToPost}>
-            <View style={styles.component2layout}>
-              <View style={styles.component2layoutIcon}>
-              <FontAwesome5 name="smile-wink" size={26} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.component2} onPress={goToPost}>
+              <View style={styles.component2layout}>
+                <View style={styles.component2layoutIcon}>
+                  <FontAwesome5 name="smile-wink" size={26} color="black" />
+                </View>
+                <Text style={styles.component2Text}>
+                  게시판
+                </Text>
               </View>
-              <Text style={styles.component2Text}>
-                게시판
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.componentContainer2}>
-          <View style={styles.component1Background} />
-          <TouchableOpacity style={styles.component1} onPress={goToHomepage}>
-            <View style={styles.component3layout}>
-              <View style={styles.component3layoutIcon}>
-              <Entypo name="home" size={26} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.componentContainer2}>
+            <View style={styles.component1Background} />
+            <TouchableOpacity style={styles.component1} onPress={goToHomepage}>
+              <View style={styles.component3layout}>
+                <View style={styles.component3layoutIcon}>
+                  <Entypo name="home" size={26} color="black" />
+                </View>
+                <Text style={styles.component3Text}>
+                  HomePage
+                </Text>
               </View>
-              <Text style={styles.component3Text}>
-                HomePage
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.component2Background} />
-          <TouchableOpacity style={styles.component2}>
-            <View style={styles.component4layout}>
-              <View style={styles.component4layoutIcon}>
-                <AntDesign name="customerservice" size={26} color="black" />
+            </TouchableOpacity>
+            <View style={styles.component2Background} />
+            <TouchableOpacity style={styles.component2}>
+              <View style={styles.component4layout}>
+                <View style={styles.component4layoutIcon}>
+                  <AntDesign name="customerservice" size={26} color="black" />
+                </View>
+                <Text style={styles.component4Text}>
+                  Customerservice
+                </Text>
               </View>
-              <Text style={styles.component4Text}>
-                Customerservice
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style = {styles.elementContainer}>
-        <View style={styles.scheduleBackground} />
-        <TouchableOpacity style={styles.schedule}>
-        <View style={styles.scheduleLayout} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.elementContainer}>
+            <View style={styles.scheduleBackground} />
+            <TouchableOpacity style={styles.schedule}>
+              <View style={styles.scheduleLayout} />
               <View style={styles.scheduleLayoutIcon}>
                 <AntDesign name="customerservice" size={26} color="black" />
               </View>
               <Text style={styles.scheduleText}>
                 Music
               </Text>
-              </TouchableOpacity>
-              <View style={styles.depressionTestBackground} />
-        <TouchableOpacity style={styles.depressionTest} onPress={goToSurvey}>
-        <View style={styles.depressionTestLayout} />
+            </TouchableOpacity>
+            <View style={styles.depressionTestBackground} />
+            <TouchableOpacity style={styles.depressionTest} onPress={goToSurvey}>
+              <View style={styles.depressionTestLayout} />
               <View style={styles.depressionTestLayoutIcon}>
-              <AntDesign name="form" size={26} color="black" />
+                <AntDesign name="form" size={26} color="black" />
               </View>
               <Text style={styles.depressionTestText}>
                 우울증 검사
               </Text>
-              </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
       <Footer />
@@ -153,37 +140,37 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gainsboro',
+    backgroundColor: '#fafad2',
   },
   content: {
-    maxHeight : '90%',
+    maxHeight: '90%',
   },
-  contentAdd : {
+  contentAdd: {
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  appIntro : {
-    width : '100%',
-    height : 250,
-    backgroundColor : 'orange',
-    borderBottomWidth : 1.5,
-    borderBottomColor : 'black',
-    flexDirection : 'column',
+  appIntro: {
+    width: '100%',
+    height: 250,
+    backgroundColor: 'white',
+    borderBottomWidth: 1.5,
+    borderBottomColor: 'black',
+    flexDirection: 'column',
   },
-  appIntroText : {
-    marginTop : 85,
-    fontSize : 36,
-    fontFamily : 'SpaceGroteskBold',
-    textAlign : 'right',
-    paddingHorizontal : 20,
-    color : 'white',
+  appIntroText: {
+    marginTop: 85,
+    fontSize: 36,
+    fontFamily: 'SpaceGroteskBold',
+    textAlign: 'right',
+    paddingHorizontal: 20,
+    color: 'black',
   },
-  appIntroText2 : {
-    fontSize : 36,
-    fontFamily : 'SpaceGroteskBold',
-    textAlign : 'right',
-    paddingHorizontal : 20,
-    color : 'white',
+  appIntroText2: {
+    fontSize: 36,
+    fontFamily: 'SpaceGroteskBold',
+    textAlign: 'right',
+    paddingHorizontal: 20,
+    color: 'black',
   },
   quoteBackgroundContainer: {
     backgroundColor: 'black',
@@ -374,36 +361,36 @@ const styles = StyleSheet.create({
     left: 15,
   },
   schedule: {
-    flexDirection : 'row',
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 10,
     width: '90%',
     height: 60,
     marginLeft: 20,
-    alignItems : 'center',
+    alignItems: 'center',
     borderWidth: 1.5,
     borderColor: 'black',
     marginTop: 20,
     right: 10,
   },
-  elementContainer : {
-    flex : 1,
-    width : '100%',
-    height : 200,
+  elementContainer: {
+    flex: 1,
+    width: '100%',
+    height: 200,
   },
-  scheduleLayoutIcon : {
-    width : '100%',
-    height : 100,
-    marginLeft : -40,
-    top : 35,
+  scheduleLayoutIcon: {
+    width: '100%',
+    height: 100,
+    marginLeft: -40,
+    top: 35,
   },
-  scheduleText : {
+  scheduleText: {
     fontSize: 25,
     width: '100%',
     height: 100,
     fontFamily: 'SpaceGroteskBold',
-    marginLeft : -165,
-    top : 35,
+    marginLeft: -165,
+    top: 35,
   },
   scheduleLayout: {
     backgroundColor: 'tomato',
@@ -411,17 +398,17 @@ const styles = StyleSheet.create({
     width: 55, // 아이콘과 텍스트의 너비를 조정
     height: 55,
     justifyContent: 'center', // 아이콘과 텍스트를 가로로 중앙 정렬하기 위해 추가
-    alignItems: 'center', 
-    marginLeft : 1,
+    alignItems: 'center',
+    marginLeft: 1,
   },
-  depressionTest : {
-    flexDirection : 'row',
+  depressionTest: {
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 10,
     width: '90%',
     height: 60,
     marginLeft: 20,
-    alignItems : 'center',
+    alignItems: 'center',
     borderWidth: 1.5,
     borderColor: 'black',
     marginTop: 20,
@@ -445,22 +432,22 @@ const styles = StyleSheet.create({
     width: 55, // 아이콘과 텍스트의 너비를 조정
     height: 55,
     justifyContent: 'center', // 아이콘과 텍스트를 가로로 중앙 정렬하기 위해 추가
-    alignItems: 'center', 
-    marginLeft : 1,
+    alignItems: 'center',
+    marginLeft: 1,
   },
-  depressionTestLayoutIcon : {
-    width : '100%',
-    height : 100,
-    marginLeft : -40,
-    top : 35,
+  depressionTestLayoutIcon: {
+    width: '100%',
+    height: 100,
+    marginLeft: -40,
+    top: 35,
   },
-  depressionTestText : {
+  depressionTestText: {
     fontSize: 25,
     width: '100%',
     height: 100,
     fontFamily: 'SpaceGroteskBold',
-    marginLeft : -175,
-    top : 35,
+    marginLeft: -175,
+    top: 35,
   },
 
 });

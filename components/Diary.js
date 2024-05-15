@@ -90,7 +90,7 @@ const Diary = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#fafad2",
   },
   scrollContainer: {
     maxHeight : '90%',

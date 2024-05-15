@@ -73,7 +73,7 @@ const SurveyScore = ({ score }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'mediumturquoise',
+        backgroundColor: '#fafad2',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,

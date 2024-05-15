@@ -121,7 +121,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff99',
+    backgroundColor: '#fafad2',
   },
   scrollViewContent: {
     maxHeight : '90%',
