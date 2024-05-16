@@ -42,7 +42,7 @@ export default function App() {
       setIsLoggedIn(loginStatus); // 로그인 상태 설정
       console.log(loginStatus);
       await AsyncStorage.setItem('isLoggedIn', JSON.stringify(loginStatus)); // AsyncStorage에 로그인 상태 저장
-      console.log("Login status stored successfully.");
+      console.log(typeof(isLoggedIn));
       console.log('Stored login status:', await AsyncStorage.getItem('isLoggedIn'));
     } catch (error) {
       console.error('Error storing login status:', error);

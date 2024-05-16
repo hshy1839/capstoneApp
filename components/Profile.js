@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, Animated } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView, Animated, Alert } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
@@ -7,24 +7,56 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import fonts from './Font';
 import Footer from './Footer';
 
-const Profile = () => {
+const Profile = (isLoggedIn, setIsLoggedIn) => {
+
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
   });
 
   const navigation = useNavigation();
+  // const onPressMyInfo = async() => {
+  //   try {
+  //     // AsyncStorage에서 사용자 정보 확인
+  //     const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+  //     if (!isLoggedIn) {
+  //       // 로그인 상태가 아니라면 Alert을 띄우고 로그인 화면으로 이동
+  //       Alert.alert(
+  //         '알림',
+  //         '로그인이 필요합니다.',
+  //         [
+  //           { text: '확인', onPress: () => navigation.navigate('Login') }
+  //         ]
+  //       );
+  //     } else {
+  //       // 로그인 상태라면 프로필 페이지로 이동
+  //       navigation.navigate('Myinfo');
+  //     }
+  //   } catch (error) {
+  //     console.error('사용자 정보 초기화에 실패했습니다:', error);
+  //   };
+  // };
   const onPressMyInfo = async() => {
-  
-      try {
-        // AsyncStorage에서 사용자 정보 삭제
-        await AsyncStorage.removeItem('userInfo');
-        // 프로필 페이지 다시 불러오기
-        fetchUserInfo();
-      } catch (error) {
-        console.error('사용자 정보 초기화에 실패했습니다:', error);
-      };
-    navigation.navigate('Myinfo'); // MyInfo 스크린으로 이동
+    try {
+      // AsyncStorage에서 사용자 정보 확인
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+      console.log(isLoggedIn);
+      if (isLoggedIn) {
+        navigation.navigate('Myinfo');
+      } else {
+         Alert.alert(
+        '알림',
+        '로그인이 필요합니다.',
+        [
+          { text: '확인', onPress: () => navigation.navigate('Login') }
+        ]
+      );
+        // 로그인 상태라면 프로필 페이지로 이동
+      }
+    } catch (error) {
+      
+      console.error('사용자 정보 초기화에 실패했습니다:', error);
+    };
   };
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -38,7 +70,8 @@ const Profile = () => {
         useNativeDriver: true, // 네이티브 드라이버 사용
       }
     ).start();
-  }, []);
+  }, 
+  []);
 
   if (!loaded) {
     return null;
@@ -65,7 +98,7 @@ const Profile = () => {
               <Text style={styles.testText}>CES-D 검사</Text>
             </View>
             <View style={styles.smileyIcons}>
-              <FontAwesome5 name="smile" size={70} color="green" />
+             <FontAwesome5 name="smile" size={70} color="green" />
               <Text style={styles.testText}>생활 패턴</Text>
             </View>
             <View style={styles.smileyIcons}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView, Touchable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -16,15 +16,33 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
     const goToMyinfo = () => {
         navigation.navigate('Myinfo');
     };
+    // const handleLogout = async () => {
+    //     try {
+    //         setIsLoggedIn(false);
+    //         await AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
+    //         navigation.navigate('Login');
+    //     } catch (error) {
+    //         console.error('Error during logout:', error);
+    //     }
+    // };
     const handleLogout = async () => {
         try {
-            setIsLoggedIn(false);
-            await AsyncStorage.setItem('isLoggedIn', JSON.stringify(false));
-            navigation.navigate('Login');
+          const response = await fetch('http://172.16.2.151:3000/api/buddy/logout', {
+            method: 'POST',
+          });
+      
+          if (response.ok) {
+            setIsLoggedIn(false); 
+            await AsyncStorage.removeItem('isloggedIn'); 
+            navigation.navigate('Main');
+          } else {
+            throw new Error('로그아웃 실패');
+          }
         } catch (error) {
-            console.error('Error during logout:', error);
+          console.error('로그아웃 오류:', error);
+          alert('로그아웃에 실패했습니다.');
         }
-    };
+      };
 
     return (
         <View style={styles.container}>

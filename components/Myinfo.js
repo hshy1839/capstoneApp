@@ -25,7 +25,7 @@ const ProfileInfo = ({ label, value, editable, onChangeText }) => {
   );
 };
 
-const Profile = () => {
+const Myinfo = () => {
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
@@ -51,7 +51,7 @@ const Profile = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get('http://192.168.0.52:3000/api/buddy/userinfo');
+      const response = await axios.get('http://172.16.2.151:3000/api/buddy/userinfo');
       const data = response.data;
       setUserInfo(data);
     } catch (error) {
@@ -71,6 +71,16 @@ const Profile = () => {
   const editMyinfo = () => {
     toggleEditable(); // 수정 가능 상태 토글
   };
+
+  useEffect(() => {
+    // myinfo 페이지가 들어올 때마다 TextInput 값을 초기화합니다.
+    setUserInfo({
+      username: '',
+      password: '',
+      profileImage: require('../assets/profile.jpg'),
+      email: '',
+    });
+  }, []);
 
 
   return (
@@ -274,4 +284,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default Myinfo;
