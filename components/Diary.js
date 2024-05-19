@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Footer from './Footer';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import 'moment/locale/ko';
 
 const Diary = () => {
@@ -10,12 +12,14 @@ const Diary = () => {
   const route = useRoute();
   const { selectedDate } = route.params; // 전달받은 선택된 날짜
   const [diaryContent, setDiaryContent] = useState('');
-  const [sentiment, setSentiment] = useState(null);
+  const [username, setUsername] = useState('');
+  const [sentiment, setSentiment] = useState('');
   const [showAnalyzeButton, setShowAnalyzeButton] = useState(true); // 감정 분석하기 버튼 상태 추가
-  const client_id = "aa"; //z5hgn2e6c1
+  const client_id = "z5hgn2e6c1"; //z5hgn2e6c1
   const client_secret = "pIyDljkjtq5frD4oL62Y550OtegQ5G58nkj65fId";
   const url = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
   const formattedDate = selectedDate ? moment(selectedDate).format('YYYY.MM.DD dddd') : ''; // 날짜 포맷 변경
+  const navigation = useNavigation();
 
   const handleAnalyzeSentiment = async () => {
     const headers = {
@@ -46,10 +50,49 @@ const Diary = () => {
     }
   };
 
-  const handleSaveDiary = () => {
-    // 저장하기 버튼을 눌렀을 때의 동작 구현
-    // 예를 들어, 일기를 저장하는 기능을 추가할 수 있습니다.
-    console.log('일기 저장하기');
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/userinfo');
+      const data = response.data;
+      // 데이터에서 사용자 이름 추출
+      const name = data.name;
+      setUsername(name);
+    } catch (error) {
+      Alert.alert(
+        '알림',
+        '로그인이 필요합니다.',
+        [
+          { text: '확인', onPress: () => navigation.navigate('Login') }
+        ]
+      );
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
+  
+  const saveSentiment = async () => {
+    try {
+      const response = await axios.post('http://192.168.25.58:3000/api/buddy/score/sentiment', { sentiment });
+  
+      if (response.status === 200) {
+        const user = response.data;
+        if (user) {
+          if (user.is_active = 1) {
+            navigation.navigate('Main'); // 메인 화면으로 이동
+            alert('저장됨 !!'); // 회원가입 성공시 환영 메시지 출력
+          } else {
+            alert('안저장됨');
+          }
+        } else {
+          alert('저장 실패');
+        }
+      }
+    } catch (error) {
+      console.error('저장 오류:', error);
+    }
   };
 
   return (
@@ -73,14 +116,15 @@ const Diary = () => {
             <Text style={styles.buttonText}>감정 분석하기</Text>
           </TouchableOpacity>
         )}
-        {!showAnalyzeButton && ( // 감정 분석이 완료되면 버튼 표시
-          <TouchableOpacity onPress={handleSaveDiary} style={styles.saveBtn}>
-            <Text style={styles.buttonText}>저장하기</Text>
-          </TouchableOpacity>
-        )}
         {sentiment && (
           <Text style={styles.sentimentText}>감정상태 : {sentiment}</Text>
         )}
+        {!showAnalyzeButton && ( // 감정 분석이 완료되면 버튼 표시
+          <TouchableOpacity onPress={saveSentiment} style={styles.saveBtn}>
+            <Text style={styles.buttonText}>저장하기</Text>
+          </TouchableOpacity>
+        )}
+        
       </ScrollView>
     <Footer />
     </View>
@@ -139,10 +183,12 @@ const styles = StyleSheet.create({
     fontSize : 20,
   },
   sentimentText: {
-    marginTop: 20,
-    fontSize: 20,
+    marginTop: 10,
+    fontSize: 30,
+    textAlign : 'center',
     fontWeight: 'bold',
     color: 'blue',
+    fontFamily : 'SpaceGroteskBold',
   },
   analyzeBtn: {
     marginTop: 20,
@@ -170,6 +216,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: '10%',
     fontFamily: 'SpaceGroteskBold',
+    marginBottom : 50,
   },
   buttonText: {
     fontSize: 18,

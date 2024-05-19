@@ -6,10 +6,12 @@ import fonts from './Font';
 import Footer from './Footer';
 import SurveyScore from './SurveyScore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const DepressionSurvey = () => {
 
   const navigation = useNavigation();
+  const [username, setUsername] = useState('');
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
@@ -19,7 +21,28 @@ const DepressionSurvey = () => {
   const [score, setScore] = useState(0); // 점수를 상태로 관리
   const [scoreSubmitted, setScoreSubmitted] = useState(false); // 점수 제출 여부를 나타내는 상태
   
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/userinfo');
+      const data = response.data;
+      // 데이터에서 사용자 이름 추출
+      const name = data.name;
+      setUsername(name);
+    } catch (error) {
+      Alert.alert(
+        '알림',
+        '로그인이 필요합니다.',
+        [
+          { text: '확인', onPress: () => navigation.navigate('Login') }
+        ]
+      );
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
 
   const questionsPerPage = 4; // 한 페이지에 보여질 질문 수
 
