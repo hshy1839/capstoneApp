@@ -22,6 +22,7 @@ const Profile = () => {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [username, setUsername] = useState('');
   const [surveyScore, setSurveyScore] = useState('');
+  const [sentiment, setSentiment] = useState('');
 
   useEffect(() => {
     Animated.timing(
@@ -35,6 +36,7 @@ const Profile = () => {
 
     fetchUserInfo();
     fetchSurveyScore();
+    fetchSentiment();
   }, []);
 
   const fetchUserInfo = async () => {
@@ -67,6 +69,17 @@ const Profile = () => {
     }
   };
 
+  const fetchSentiment = async () => {
+    try {
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/score/getsentiment');
+      const data = response.data;
+      const sentiment = data.sentiment;
+      setSentiment(sentiment);
+    } catch (error) {
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
+
   const getCesdIcon = (score) => {
     if (score >= 25) {
       return <FontAwesome5 name="frown" size={70} color="red" />;
@@ -74,6 +87,16 @@ const Profile = () => {
       return <FontAwesome5 name="meh" size={70} color="orange" />;
     } else if (score >= 16) {
       return <FontAwesome5 name="smile" size={70} color="yellow" />;
+    } else {
+      return <FontAwesome5 name="grin" size={70} color="green" />;
+    }
+  };
+
+  const getSentimentIcon = (sentiment) => {
+    if (sentiment == 'negative') {
+      return <FontAwesome5 name="frown" size={70} color="red" />;
+    } else if (sentiment == 'neutral') {
+      return <FontAwesome5 name="meh" size={70} color="orange" />;
     } else {
       return <FontAwesome5 name="grin" size={70} color="green" />;
     }
@@ -104,7 +127,7 @@ const Profile = () => {
                 <Text style={styles.testText}>생활 패턴</Text>
               </View>
               <View style={styles.smileyIcons}>
-                <FontAwesome5 name="smile" size={70} color="green" />
+              {getSentimentIcon(sentiment)}
                 <Text style={styles.testText}>감정 일기</Text>
               </View>
             </View>
