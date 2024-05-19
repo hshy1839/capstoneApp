@@ -3,12 +3,16 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput } from 
 import { FontAwesome5 } from '@expo/vector-icons';
 import Footer from './Footer';
 
-const Post = ({ title, content, onPress }) => {
+const Post = ({ title, content, username, onPress, date }) => {
   return (
     <TouchableOpacity style={styles.postContainer} onPress={onPress}>
       <View>
       <Text style={styles.postTitle}>{title}</Text>
       <Text style={styles.postContent}>{content}</Text>
+      <View style = {styles.poster}>
+      <Text style={styles.postUsername}>{username}</Text>
+      <Text style={styles.postDate}>{date}</Text>
+      </View>
       </View>
       <View style = {styles.borderBottom}/>
     </TouchableOpacity>
@@ -19,14 +23,14 @@ const Board = ({ navigation }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   // 게시물 목록
   const posts = [
-    { id: 1, title: '우울해요', content: '너무 힘들어요' },
-    { id: 2, title: '배고파요', content: '배고파서 힘이안나요 어떡하나요?' },
-    { id: 3, title: '테스트 제목이에요', content: '테스트 내용이에요' },
-    { id: 4, title: '행복이란 뭘까', content: '뭔지 모르겠어 진짜' },
-    { id: 5, title: '우울해요', content: '너무 힘들어요' },
-    { id: 6, title: '저녁 뭐먹음 다들?', content: '저녁 메뉴 추천 좀 받을게' },
-    { id: 7, title: '테스트 제목이에요', content: '테스트 내용이에요' },
-    { id: 8, title: '테스트 제목이에요', content: '테스트 내용이에요' },
+    { id: 1, title: '우울함을 이겨내는 방법', content: '우울함이 깊어지면 어떻게 해야 할지 모르겠어요. 조언 부탁드립니다.' , username : 'buddy', date : '24-05-19'},
+    { id: 2, title: '우울할 때 해야 할 일', content: '우울할 때 어떤 활동을 하면 좋을까요? 제가 할 수 있는 게 있을까요?', username : 'user1', date : '24-05-18' },
+    { id: 3, title: '우울증에 대해 알고 싶어요', content: '우울증은 무엇인가요? 어떻게 대처해야 하나요?', username : 'user2', date : '24-05-18' },
+    { id: 4, title: '치료 경험 공유해주세요', content: '우울증 치료를 받은 경험 있는 분들, 어떻게 치료를 받았나요? 효과는 있었나요?', username : 'user3', date : '24-05-17' },
+    { id: 5, title: '마음이 너무 무겁습니다', content: '마음이 너무 무겁고 우울해요. 이럴 때는 어떻게 해야 할까요?', username : 'user4', date : '24-05-17' },
+    { id: 6, title: '마음이 아플 때 읽기 좋은 글?', content: '마음이 아플 때 읽을만한 글이나 시를 추천해주세요. 위로가 될 만한 내용이면 좋겠어요.', username : 'user5', date : '24-05-17' },
+    { id: 7, title: '우울증 관련 서적 추천해주세요', content: '우울증에 대해 더 알고 싶어요. 좋은 책이나 자료가 있다면 추천해주세요.', username : 'user6', date : '24-05-16' },
+    { id: 8, title: '친구가 우울해하는데 어떻게 도와줄까요?', content: '친구가 우울해하는데, 어떻게 도와줄 수 있을까요? 조언 부탁드려요.', username : 'user7', date : '24-05-16' },
     // 필요한 만큼 게시물을 추가할 수 있습니다.
   ];
 
@@ -55,6 +59,8 @@ const Board = ({ navigation }) => {
             key={post.id}
             title={post.title}
             content={post.content}
+            username = {post.username}
+            date = {post.date}
             onPress={() => handlePressPost(post.id)}
           />
         ))}
@@ -75,6 +81,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 5,
+    borderBottomWidth : 1,
+    borderBottomColor : 'black',
   },
   searchInput: {
     flex: 1,
@@ -92,11 +100,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   scrollViewContent: {
-    padding: 5,
+    marginBottom : 80,
   },
   postContainer: {
     backgroundColor: 'white',
-    padding: 10,
+    padding: 8,
     borderColor: 'black',
   },
   borderBottom : {
@@ -114,7 +122,24 @@ const styles = StyleSheet.create({
   postContent: {
     fontSize: 16,
     color: 'black',
+    fontFamily : 'SpaceGroteskRegular',
   },
+  postUsername : {
+    fontSize : 14,
+    color : 'black',
+    fontFamily : 'SpaceGroteskBold',
+  },
+  postDate : {
+    fontsize : 14,
+    color : 'black',
+    fontFamily : 'SpaceGroteskBold'
+  },
+  poster : {
+    marginTop : 10,
+    paddingHorizontal : 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
 });
 
 export default Board;

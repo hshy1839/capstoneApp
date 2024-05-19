@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, Linking, View, ScrollView, Image, TouchableOpacity, SafeAreaView, ViewBase, Animated } from 'react-native';
-import { Ionicons, AntDesign, Feather, FontAwesome5, Entypo } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Feather, FontAwesome5, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
 import Footer from './Footer';
@@ -27,6 +27,9 @@ const Main = () => {
   const goToSetting = () => {
     navigation.navigate('Setting');
   };
+  const goToDiary = () => {
+    navigation.navigate('SentimentAnalysis');
+  };
 
 
   useEffect(() => {
@@ -52,8 +55,11 @@ const Main = () => {
     <View style={styles.container}>
       <ScrollView style={styles.content}>
         <View style={styles.appIntro}>
-          <Text style={styles.appIntroText}>BUDDY와 함께하는</Text>
-          <Text style={styles.appIntroText2}>우울퇴치</Text>
+          <Image source={require('../assets/mascot.png')} style={styles.Image} />
+          <View style={styles.mainContainer}>
+            <Text style={styles.appIntroText}>BUDDY와 함께하는</Text>
+            <Text style={styles.appIntroText2}>우울퇴치</Text>
+          </View>
         </View>
         <View style={styles.contentAdd}>
           <View style={styles.quoteContainer}>
@@ -62,7 +68,7 @@ const Main = () => {
             </Animated.Text>
           </View>
           <View style={styles.componentContainer}>
-            <View style={styles.component1Background} />
+            <TouchableOpacity style={styles.component1Background} />
             <TouchableOpacity style={styles.component1} onPress={goToSetting}>
               <View style={styles.component1layout}>
                 <View style={styles.component1layoutIcon}>
@@ -73,16 +79,17 @@ const Main = () => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.component2} onPress={goToPost}>
-              <View style={styles.component2layout}>
-                <View style={styles.component2layoutIcon}>
-                  <FontAwesome5 name="smile-wink" size={26} color="black" />
+              <View style={styles.component2Background} />
+              <TouchableOpacity style={[styles.component2, { zIndex: 1 }]} onPress={goToPost}>
+                <View style={styles.component2layout}>
+                  <View style={styles.component2layoutIcon}>
+                    <MaterialIcons name="post-add" size={26} color="black" />
+                  </View>
+                  <Text style={styles.component2Text}>
+                    게시판
+                  </Text>
                 </View>
-                <Text style={styles.component2Text}>
-                  게시판
-                </Text>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
           </View>
           <View style={styles.componentContainer2}>
             <View style={styles.component1Background} />
@@ -103,20 +110,20 @@ const Main = () => {
                   <AntDesign name="customerservice" size={26} color="black" />
                 </View>
                 <Text style={styles.component4Text}>
-                  Customerservice
+                  고객센터
                 </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.elementContainer}>
             <View style={styles.scheduleBackground} />
-            <TouchableOpacity style={styles.schedule}>
+            <TouchableOpacity style={styles.schedule} onPress={goToDiary}>
               <View style={styles.scheduleLayout} />
               <View style={styles.scheduleLayoutIcon}>
-                <AntDesign name="customerservice" size={26} color="black" />
+                <Entypo name="open-book" size={26} color="black" />
               </View>
               <Text style={styles.scheduleText}>
-                Music
+                감정 분석 일기
               </Text>
             </TouchableOpacity>
             <View style={styles.depressionTestBackground} />
@@ -155,6 +162,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: 1.5,
     borderBottomColor: 'black',
+    flexDirection: 'row',
+  },
+  Image: {
+    padding: 10,
+    width: 100,
+    height: 100,
+    marginTop: 80,
+  },
+  mainContainer: {
     flexDirection: 'column',
   },
   appIntroText: {
@@ -389,7 +405,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
     fontFamily: 'SpaceGroteskBold',
-    marginLeft: -165,
+    marginLeft: -195,
     top: 35,
   },
   scheduleLayout: {
@@ -446,7 +462,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
     fontFamily: 'SpaceGroteskBold',
-    marginLeft: -175,
+    marginLeft: -185,
     top: 35,
   },
 
