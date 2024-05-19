@@ -6,111 +6,113 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fonts from './Font';
 import Footer from './Footer';
+import axios from 'axios';
 
-const Profile = (isLoggedIn, setIsLoggedIn) => {
-
+const Profile = () => {
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
     SpaceGroteskBold: fonts.spaceGroteskBold,
   });
 
   const navigation = useNavigation();
-  // const onPressMyInfo = async() => {
-  //   try {
-  //     // AsyncStorage에서 사용자 정보 확인
-  //     const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-  //     if (!isLoggedIn) {
-  //       // 로그인 상태가 아니라면 Alert을 띄우고 로그인 화면으로 이동
-  //       Alert.alert(
-  //         '알림',
-  //         '로그인이 필요합니다.',
-  //         [
-  //           { text: '확인', onPress: () => navigation.navigate('Login') }
-  //         ]
-  //       );
-  //     } else {
-  //       // 로그인 상태라면 프로필 페이지로 이동
-  //       navigation.navigate('Myinfo');
-  //     }
-  //   } catch (error) {
-  //     console.error('사용자 정보 초기화에 실패했습니다:', error);
-  //   };
-  // };
-  const onPressMyInfo = async() => {
-    try {
-      // AsyncStorage에서 사용자 정보 확인
-      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-      console.log(isLoggedIn);
-      if (isLoggedIn) {
-        navigation.navigate('Myinfo');
-      } else {
-         Alert.alert(
-        '알림',
-        '로그인이 필요합니다.',
-        [
-          { text: '확인', onPress: () => navigation.navigate('Login') }
-        ]
-      );
-        // 로그인 상태라면 프로필 페이지로 이동
-      }
-    } catch (error) {
-      
-      console.error('사용자 정보 초기화에 실패했습니다:', error);
-    };
+  const onPressMyInfo = () => {
+    navigation.navigate('Myinfo');
   };
 
   const [fadeAnim] = useState(new Animated.Value(0));
+  const [username, setUsername] = useState('');
+  const [surveyScore, setSurveyScore] = useState('');
 
   useEffect(() => {
     Animated.timing(
       fadeAnim,
       {
         toValue: 1,
-        duration: 2000, // 2초 동안 애니메이션 진행
-        useNativeDriver: true, // 네이티브 드라이버 사용
+        duration: 2000,
+        useNativeDriver: true,
       }
     ).start();
-  }, 
-  []);
+
+    fetchUserInfo();
+    fetchSurveyScore();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/userinfo');
+      const data = response.data;
+      // 데이터에서 사용자 이름 추출
+      const name = data.name;
+      setUsername(name);
+    } catch (error) {
+      Alert.alert(
+        '알림',
+        '로그인이 필요합니다.',
+        [
+          { text: '확인', onPress: () => navigation.navigate('Login') }
+        ]
+      );
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
+
+  const fetchSurveyScore = async () => {
+    try {
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/score/getsurveyscore');
+      const data = response.data;
+      const surveyScore = data.surveyScore;
+      setSurveyScore(surveyScore);
+    } catch (error) {
+      console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
+    }
+  };
+
+  const getCesdIcon = (score) => {
+    if (score >= 25) {
+      return <FontAwesome5 name="frown" size={70} color="red" />;
+    } else if (score >= 21) {
+      return <FontAwesome5 name="meh" size={70} color="orange" />;
+    } else if (score >= 16) {
+      return <FontAwesome5 name="smile" size={70} color="yellow" />;
+    } else {
+      return <FontAwesome5 name="grin" size={70} color="green" />;
+    }
+  };
 
   if (!loaded) {
     return null;
   }
-
-  const user = {
-    username: '정민',
-  };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContent}>
         <View style={styles.userInfo}>
           <Animated.Text style={[styles.username, { opacity: fadeAnim }]}>안녕하세요</Animated.Text>
-          <Animated.Text style={[styles.username, { opacity: fadeAnim }]}>{user.username} 님</Animated.Text>
+          <Animated.Text style={[styles.username, { opacity: fadeAnim }]}>{username} 님</Animated.Text>
         </View>
         <View style={styles.stats}></View>
         <View style={styles.componentContainer}>
           <View style={styles.component1}>
             <Text style={styles.component1Text}>Status</Text>
             <View style={styles.iconContainer}>
-            <View style={styles.smileyIcons}>
-              <FontAwesome5 name="smile" size={70} color="green" />
-              <Text style={styles.testText}>CES-D 검사</Text>
-            </View>
-            <View style={styles.smileyIcons}>
-             <FontAwesome5 name="smile" size={70} color="green" />
-              <Text style={styles.testText}>생활 패턴</Text>
-            </View>
-            <View style={styles.smileyIcons}>
-              <FontAwesome5 name="smile" size={70} color="green" />
-              <Text style={styles.testText}>감정 일기</Text>
-            </View>
+              <View style={styles.smileyIcons}>
+                {getCesdIcon(surveyScore)}
+                <Text style={styles.testText}>CES-D 검사</Text>
+              </View>
+              <View style={styles.smileyIcons}>
+                <FontAwesome5 name="smile" size={70} color="green" />
+                <Text style={styles.testText}>생활 패턴</Text>
+              </View>
+              <View style={styles.smileyIcons}>
+                <FontAwesome5 name="smile" size={70} color="green" />
+                <Text style={styles.testText}>감정 일기</Text>
+              </View>
             </View>
           </View>
           <View style={styles.component2} >
             <Text style={styles.component2Text}>내 정보</Text>
-            <TouchableOpacity style= {styles.checkMyinfo} onPress={onPressMyInfo}>
-              <Text style = {styles.myinfoBtn}>확인하기</Text>
+            <TouchableOpacity style={styles.checkMyinfo} onPress={onPressMyInfo}>
+              <Text style={styles.myinfoBtn}>확인하기</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.component3}>
@@ -125,6 +127,7 @@ const Profile = (isLoggedIn, setIsLoggedIn) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

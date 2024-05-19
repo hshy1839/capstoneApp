@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import axios from 'axios';
 import fonts from './Font';
 import Footer from './Footer';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileInfo = ({ label, value, editable, onChangeText }) => {
   return (
@@ -49,12 +50,22 @@ const Myinfo = () => {
     fetchUserInfo();
   }, []);
 
+  
+  const navigation = useNavigation();
+
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get('http://172.16.2.151:3000/api/buddy/userinfo');
+      const response = await axios.get('http://192.168.25.58:3000/api/buddy/userinfo');
       const data = response.data;
       setUserInfo(data);
     } catch (error) {
+      Alert.alert(
+        '알림',
+        '로그인이 필요합니다.',
+        [
+          { text: '확인', onPress: () => navigation.navigate('Login') }
+        ]
+      );
       console.error('사용자 정보를 불러오는 데 실패했습니다:', error);
     }
   };
@@ -79,6 +90,9 @@ const Myinfo = () => {
       password: '',
       profileImage: require('../assets/profile.jpg'),
       email: '',
+      birthdate : '',
+      name : '',
+      phoneNumber : '',
     });
   }, []);
 
@@ -91,7 +105,7 @@ const Myinfo = () => {
           <View style={styles.component1}>
             <Text style={styles.component1Text}>내 정보</Text>
             <ProfileInfo
-              label="이름"
+              label="아이디"
               value={userInfo.username}
               editable={editable}
               onChangeText={(text) =>
@@ -112,6 +126,30 @@ const Myinfo = () => {
               editable={editable}
               onChangeText={(text) =>
                 setUserInfo((prevState) => ({ ...prevState, email: text }))
+              }
+            />
+            <ProfileInfo
+              label="생년 월 일"
+              value={userInfo.birthdate}
+              editable={editable}
+              onChangeText={(text) =>
+                setUserInfo((prevState) => ({ ...prevState, birthdate: text }))
+              }
+            />
+            <ProfileInfo
+              label="이름"
+              value={userInfo.name}
+              editable={editable}
+              onChangeText={(text) =>
+                setUserInfo((prevState) => ({ ...prevState, name: text }))
+              }
+            />
+            <ProfileInfo
+              label="전화번호"
+              value={userInfo.phoneNumber}
+              editable={editable}
+              onChangeText={(text) =>
+                setUserInfo((prevState) => ({ ...prevState, phoneNumber: text }))
               }
             />
             {editable ? (

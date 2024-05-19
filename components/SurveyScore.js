@@ -49,11 +49,11 @@ const SurveyScore = ({ score }) => {
     }, [score, fadeAnim, fadeScoreText]);
 
     const [userData, setUserData] = useState({
-        SurveyScore: '',
+        surveyScore: score,
       });
       const saveScore = async () => {
         try {
-          const response = await axios.post('http://192.168.0.52:3000/api/buddy/score/surveyscore', userData);
+          const response = await axios.post('http://192.168.25.58:3000/api/buddy/score/surveyscore', userData);
       
           if (response.status === 200) {
             const user = response.data;

@@ -4,8 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native'; // useRoute 추가
 import { useFonts } from 'expo-font';
 import fonts from './Font';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Footer = () => {
+const Footer = (isLoggedIn, setIsLoggedIn) => {
   const navigation = useNavigation();
   const route = useRoute(); // 현재 라우트 정보 가져오기
 
@@ -16,9 +17,29 @@ const Footer = () => {
   if (!loaded) {
     return null;
   }
-  const goToProfile = () => {
-    navigation.navigate('Profile');
+
+  const goToProfile = async() => {
+    try {
+      // AsyncStorage에서 사용자 정보 확인
+      const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+      if (!isLoggedIn) {
+        // 로그인 상태가 아니라면 Alert을 띄우고 로그인 화면으로 이동
+        Alert.alert(
+          '알림',
+          '로그인이 필요합니다.',
+          [
+            { text: '확인', onPress: () => navigation.navigate('Login') }
+          ]
+        );
+      } else {
+        // 로그인 상태라면 프로필 페이지로 이동
+        navigation.navigate('Profile');
+      }
+    } catch (error) {
+      console.error('사용자 정보 초기화에 실패했습니다:', error);
+    };
   };
+
   const goToMain = () => {
     navigation.navigate('Main');
   };

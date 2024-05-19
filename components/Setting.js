@@ -27,7 +27,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
     // };
     const handleLogout = async () => {
         try {
-          const response = await fetch('http://172.16.2.151:3000/api/buddy/logout', {
+          const response = await fetch('http://192.168.25.58:3000/api/buddy/logout', {
             method: 'POST',
           });
       
@@ -36,7 +36,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
             await AsyncStorage.removeItem('isloggedIn'); 
             navigation.navigate('Main');
           } else {
-            throw new Error('로그아웃 실패');
+            throw new Error('response.ok안됨');
           }
         } catch (error) {
           console.error('로그아웃 오류:', error);
