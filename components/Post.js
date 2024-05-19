@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const Post = ({ title, content, username, onPress, date }) => {
   return (
-    <TouchableOpacity style={styles.postContainer} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.8} style={styles.postContainer} onPress={onPress}>
       <View>
       <Text style={styles.postTitle}>{title}</Text>
       <Text style={styles.postContent}>{content}</Text>
@@ -49,7 +49,7 @@ const Board = ({ navigation }) => {
           onChangeText={(text) => setSearchKeyword(text)}
           value={searchKeyword}
         />
-        <TouchableOpacity style={styles.searchButton}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.searchButton}>
           <FontAwesome5 name="search" size={20} color="white" />
         </TouchableOpacity>
       </View>

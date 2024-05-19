@@ -6,13 +6,13 @@ const SideMenu = ({ closeMenu }) => {
   return (
     <View style={styles.menuContainer}>
       {/* 메뉴 내용 */}
-      <TouchableOpacity style={styles.menuItem} onPress={closeMenu}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.menuItem} onPress={closeMenu}>
         <Text style={styles.menuText}>Menu Item 1</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.menuItem} onPress={closeMenu}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.menuItem} onPress={closeMenu}>
         <Text style={styles.menuText}>Menu Item 2</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.menuItem} onPress={closeMenu}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.menuItem} onPress={closeMenu}>
         <Text style={styles.menuText}>Menu Item 3</Text>
       </TouchableOpacity>
     </View>

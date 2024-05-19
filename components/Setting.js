@@ -50,7 +50,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
                 <View style={styles.header}>
                     <StatusBar backgroundColor="white" barStyle="dark-content" />
                     {route.name !== 'Main' && (
-                        <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                        <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={goBack}>
                             <Ionicons name="arrow-back" size={27} color="black" />
                         </TouchableOpacity>
                     )}
@@ -58,7 +58,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.containerContainer}>
-                <TouchableOpacity style = {styles.elementsContainer} onPress={goToMyinfo}>
+                <TouchableOpacity activeOpacity={0.8} style = {styles.elementsContainer} onPress={goToMyinfo}>
                 <View style={styles.elements}>
                 <MaterialCommunityIcons name="account-outline" size={40} color="black"  />
                 <Text style = {styles.accountText}>account</Text>
@@ -66,7 +66,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
                 </TouchableOpacity>
 
                 <View style={styles.borderTop}></View>
-                <TouchableOpacity style = {styles.elementsContainer} onPress={handleLogout}>
+                <TouchableOpacity activeOpacity={0.8} style = {styles.elementsContainer} onPress={handleLogout}>
                 <View style={styles.elements}>
                 <MaterialCommunityIcons name="exit-to-app" size={40} color="black" />
                 <Text style = {styles.accountText}>Logout</Text>
@@ -74,7 +74,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
                 </TouchableOpacity>
 
                 <View style={styles.borderTop}></View>
-                <TouchableOpacity style = {styles.elementsContainer}>
+                <TouchableOpacity activeOpacity={0.8} style = {styles.elementsContainer}>
                 <View style={styles.elements}>
                 <MaterialCommunityIcons name="account-outline" size={40} color="black"  />
                 <Text style = {styles.accountText}>setting2</Text>
@@ -82,7 +82,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
                 </TouchableOpacity>
 
                 <View style={styles.borderTop}></View>
-                <TouchableOpacity style = {styles.elementsContainer}>
+                <TouchableOpacity activeOpacity={0.8} style = {styles.elementsContainer}>
                 <View style={styles.elements}>
                 <MaterialCommunityIcons name="account-outline" size={40} color="black"  />
                 <Text style = {styles.accountText}>setting3</Text>

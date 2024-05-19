@@ -82,10 +82,10 @@ const SurveyScore = ({ score }) => {
                 <Animated.Text style={[styles.message, { opacity: fadeAnim }]}>
                     {scoreMessage}
                 </Animated.Text>
-                <TouchableOpacity style={styles.backButton} onPress={goToHome}>
+                <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={goToHome}>
                     <Text style={styles.backButtonText}>홈으로</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.backButton} onPress={saveScore}>
+                <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={saveScore}>
                     <Text style={styles.backButtonText}>저장 하기</Text>
                 </TouchableOpacity>
             </View>

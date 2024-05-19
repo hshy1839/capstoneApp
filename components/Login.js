@@ -75,11 +75,11 @@ const Login = ({ onLogin }) => {
           onChangeText={setPassword}
         />
         <View style={styles.loginBtnContainer} />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupBtnContainer} />
-        <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.signupButton} onPress={handleSignup}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
       </View>

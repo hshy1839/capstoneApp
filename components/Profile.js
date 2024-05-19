@@ -134,13 +134,13 @@ const Profile = () => {
           </View>
           <View style={styles.component2} >
             <Text style={styles.component2Text}>내 정보</Text>
-            <TouchableOpacity style={styles.checkMyinfo} onPress={onPressMyInfo}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.checkMyinfo} onPress={onPressMyInfo}>
               <Text style={styles.myinfoBtn}>확인하기</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.component3}>
             <Text style={styles.component3Text}>라이프 패턴</Text>
-            <TouchableOpacity style={styles.checkLifeCycle}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.checkLifeCycle}>
               <Text style={styles.lifecycleBtn}>확인하기</Text>
             </TouchableOpacity>
           </View>

@@ -31,7 +31,7 @@ const SentimentAnalysis = () => {
         />
       </View>
       <View style={styles.diaryLog}>
-        <TouchableOpacity onPress={gotoDiary} style={styles.addDiaryBtn}>
+        <TouchableOpacity activeOpacity={0.8} onPress={gotoDiary} style={styles.addDiaryBtn}>
           <Text style={styles.buttonText}>감정 일기장 쓰기</Text>
         </TouchableOpacity>
       </View>

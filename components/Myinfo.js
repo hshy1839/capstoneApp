@@ -153,11 +153,11 @@ const Myinfo = () => {
               }
             />
             {editable ? (
-              <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
+              <TouchableOpacity activeOpacity={0.8} style={styles.saveButton} onPress={saveChanges}>
                 <Text style={styles.buttonText}>저장하기</Text>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.loginButton} onPress={editMyinfo}>
+              <TouchableOpacity activeOpacity={0.8} style={styles.loginButton} onPress={editMyinfo}>
                 <Text style={styles.buttonText}>수정하기</Text>
               </TouchableOpacity>
             )}

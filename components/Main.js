@@ -68,8 +68,8 @@ const Main = () => {
             </Animated.Text>
           </View>
           <View style={styles.componentContainer}>
-            <TouchableOpacity style={styles.component1Background} />
-            <TouchableOpacity style={styles.component1} onPress={goToSetting}>
+            <View style={styles.component1Background} />
+            <TouchableOpacity activeOpacity={0.8} style={styles.component1} onPress={goToSetting}>
               <View style={styles.component1layout}>
                 <View style={styles.component1layoutIcon}>
                   <Ionicons name="settings-outline" size={26} color="black" />
@@ -80,7 +80,7 @@ const Main = () => {
               </View>
             </TouchableOpacity>
               <View style={styles.component2Background} />
-              <TouchableOpacity style={[styles.component2, { zIndex: 1 }]} onPress={goToPost}>
+              <TouchableOpacity  activeOpacity={0.8} style={[styles.component2, { zIndex: 1 }]} onPress={goToPost}>
                 <View style={styles.component2layout}>
                   <View style={styles.component2layoutIcon}>
                     <MaterialIcons name="post-add" size={26} color="black" />
@@ -93,7 +93,7 @@ const Main = () => {
           </View>
           <View style={styles.componentContainer2}>
             <View style={styles.component1Background} />
-            <TouchableOpacity style={styles.component1} onPress={goToHomepage}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.component1} onPress={goToHomepage}>
               <View style={styles.component3layout}>
                 <View style={styles.component3layoutIcon}>
                   <Entypo name="home" size={26} color="black" />
@@ -104,7 +104,7 @@ const Main = () => {
               </View>
             </TouchableOpacity>
             <View style={styles.component2Background} />
-            <TouchableOpacity style={styles.component2}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.component2}>
               <View style={styles.component4layout}>
                 <View style={styles.component4layoutIcon}>
                   <AntDesign name="customerservice" size={26} color="black" />
@@ -117,7 +117,7 @@ const Main = () => {
           </View>
           <View style={styles.elementContainer}>
             <View style={styles.scheduleBackground} />
-            <TouchableOpacity style={styles.schedule} onPress={goToDiary}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.schedule} onPress={goToDiary}>
               <View style={styles.scheduleLayout} />
               <View style={styles.scheduleLayoutIcon}>
                 <Entypo name="open-book" size={26} color="black" />
@@ -127,7 +127,7 @@ const Main = () => {
               </Text>
             </TouchableOpacity>
             <View style={styles.depressionTestBackground} />
-            <TouchableOpacity style={styles.depressionTest} onPress={goToSurvey}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.depressionTest} onPress={goToSurvey}>
               <View style={styles.depressionTestLayout} />
               <View style={styles.depressionTestLayoutIcon}>
                 <AntDesign name="form" size={26} color="black" />

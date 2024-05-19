@@ -96,7 +96,7 @@ const Signup = ({ }) => {
           onChangeText={(birthdate) => setUserData(prevState => ({ ...prevState, birthdate }))}
         />
         <View style = {styles.loginBtnContainer}/>
-        <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.loginButton} onPress={handleSignup}>
           <Text style={styles.buttonText}>Join</Text>
         </TouchableOpacity>
       </View>
