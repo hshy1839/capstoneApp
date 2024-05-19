@@ -1,14 +1,36 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native'; // useRoute 추가
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import fonts from './Font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Footer = (isLoggedIn, setIsLoggedIn) => {
+const Footer = () => {
   const navigation = useNavigation();
-  const route = useRoute(); // 현재 라우트 정보 가져오기
+  const route = useRoute();
+
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const [loaded] = useFonts({
     SpaceGroteskRegular: fonts.spaceGroteskRegular,
@@ -18,26 +40,21 @@ const Footer = (isLoggedIn, setIsLoggedIn) => {
     return null;
   }
 
-  const goToProfile = async() => {
+  const goToProfile = async () => {
     try {
-      // AsyncStorage에서 사용자 정보 확인
       const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
       if (!isLoggedIn) {
-        // 로그인 상태가 아니라면 Alert을 띄우고 로그인 화면으로 이동
         Alert.alert(
           '알림',
           '로그인이 필요합니다.',
-          [
-            { text: '확인', onPress: () => navigation.navigate('Login') }
-          ]
+          [{ text: '확인', onPress: () => navigation.navigate('Login') }]
         );
       } else {
-        // 로그인 상태라면 프로필 페이지로 이동
         navigation.navigate('Profile');
       }
     } catch (error) {
       console.error('사용자 정보 초기화에 실패했습니다:', error);
-    };
+    }
   };
 
   const goToMain = () => {
@@ -45,13 +62,13 @@ const Footer = (isLoggedIn, setIsLoggedIn) => {
   };
   const gotoLogin = () => {
     navigation.navigate('Login');
-  }
+  };
   const gotoSentiment = () => {
     navigation.navigate('SentimentAnalysis');
-  }
+  };
 
   return (
-    <View style={[styles.footer, styles.fixedFooter]}>
+    <View style={keyboardVisible ? styles.hiddenFooter : styles.footer}>
       <TouchableOpacity style={styles.menuItem} onPress={goToMain}>
         <Ionicons name="home" size={27} color="black" />
         <Text style={styles.iconText}>Home</Text>
@@ -62,9 +79,8 @@ const Footer = (isLoggedIn, setIsLoggedIn) => {
         <TouchableOpacity
           onPress={gotoSentiment}
           style={[styles.menuItem, styles.addCircleContent]}
-          activeOpacity={1} // 터치될 때 투명해지는 효과 제거
+          activeOpacity={1}
         >
-
           <View style={styles.addCircleIconWrapper}>
             <View style={styles.addCircleIcon}>
               <Text style={styles.plus}>+</Text>
@@ -86,17 +102,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderTopWidth: 1.5,
+    height : '10%',
   },
-  fixedFooter: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+  hiddenFooter: {
+    height: '0%',
+    overflow: 'hidden',
   },
   menuItem: {
     alignItems: 'center',
-    flex: 1, // 각 아이콘의 너비를 동일하게 설정
-    marginTop : 10,
+    flex: 1,
+    marginTop: 10,
   },
   addCircle: {
     top: -45,

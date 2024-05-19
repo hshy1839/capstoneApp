@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   component1Background: {
     backgroundColor: 'black',
     width: '90%',
-    height: 500,
+    height: 630,
     zIndex: -1,
     borderRadius: 10,
     justifyContent: 'center',
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     width: '90%',
-    height: 500,
+    height: 630,
     padding: 20,
     marginBottom: 10,
     borderWidth: 1.5,
@@ -288,8 +288,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     fontFamily: 'SpaceGroteskBold',
-    marginTop: 60,
-    marginBottom: 40,
+    marginTop: 30,
+    marginBottom: 50,
   },
   loginBtnContainer: {
     backgroundColor: 'black',
