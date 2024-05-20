@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Keyboard, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -67,8 +67,12 @@ const Footer = () => {
     navigation.navigate('SentimentAnalysis');
   };
 
+  if (keyboardVisible) {
+    return null; // 키보드가 켜져 있을 때 Footer를 렌더링하지 않음
+  }
+
   return (
-    <View style={keyboardVisible ? styles.hiddenFooter : styles.footer}>
+    <View style={styles.footer}>
       <TouchableOpacity style={styles.menuItem} onPress={goToMain}>
         <Ionicons name="home" size={27} color="black" />
         <Text style={styles.iconText}>Home</Text>
@@ -100,13 +104,11 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: '#66CC99',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     borderTopWidth: 1.5,
-    height : '10%',
+    height: '10%',
   },
   hiddenFooter: {
-    height: '0%',
-    overflow: 'hidden',
+    display: 'none',
   },
   menuItem: {
     alignItems: 'center',
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   addCircleContent: {
     position: 'relative',
-    zIndex: 1,
+    zIndex: 2, // Ensure this is higher than the blackCircle
     borderRadius: 100,
   },
   addCircleIconWrapper: {
@@ -135,6 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 2, // Ensure this is higher than the blackCircle
   },
   plus: {
     fontSize: 50,
@@ -142,13 +145,14 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   blackCircle: {
-    position: 'absolute',
+    position: 'absolute', // Change to absolute positioning
     backgroundColor: 'black',
     borderRadius: 100,
     width: 70,
     height: 70,
     top: 15,
     left: 5,
+    zIndex: 1, // Lower zIndex so it appears behind
   },
   iconText: {
     marginTop: 5,

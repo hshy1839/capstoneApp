@@ -16,6 +16,7 @@ import SentimentAnalysis from './components/SentimentAnalysis';
 import Diary from './components/Diary';
 import Setting from './components/Setting';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CreatePost from './components/CreatePost';
 
 const Stack = createStackNavigator();
 
@@ -72,6 +73,7 @@ export default function App() {
         <Stack.Screen name="SurveyScore" component={SurveyScore} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
         <Stack.Screen name="SentimentAnalysis" component={SentimentAnalysis} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
         <Stack.Screen name="Diary" component={Diary} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
+        <Stack.Screen name="CreatePost" component={CreatePost} options={{ header: (props) => <Header {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> }} />
         <Stack.Screen
           name="Setting"
           options={{ headerShown: false }}

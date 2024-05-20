@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     
     try {
-      const response = await axios.post('http://192.168.25.58:3000/api/buddy/login', {
+      const response = await axios.post(`http://172.16.2.102:3000/api/buddy/login`, {
         username,
        password,
       });
@@ -106,9 +106,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   loginContainer: {
-    marginTop: -100,
+    
+    top: 35,
     width: 300,
     height: 400,
+    marginBottom : 100,
     backgroundColor: 'white',
     borderRadius: 20,
     borderWidth: 1.5,

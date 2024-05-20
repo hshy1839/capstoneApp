@@ -27,7 +27,7 @@ const Setting = ({isLoggedIn, setIsLoggedIn }) => {
     // };
     const handleLogout = async () => {
         try {
-          const response = await fetch('http://192.168.25.58:3000/api/buddy/logout', {
+          const response = await fetch('http://172.16.2.102:3000/api/buddy/logout', {
             method: 'POST',
           });
       

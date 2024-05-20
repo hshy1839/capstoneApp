@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Footer from './Footer';
+import { EvilIcons } from '@expo/vector-icons';
 
 const Post = ({ title, content, username, onPress, date }) => {
   return (
@@ -33,11 +34,14 @@ const Board = ({ navigation }) => {
     { id: 8, title: '친구가 우울해하는데 어떻게 도와줄까요?', content: '친구가 우울해하는데, 어떻게 도와줄 수 있을까요? 조언 부탁드려요.', username : 'user7', date : '24-05-16' },
     // 필요한 만큼 게시물을 추가할 수 있습니다.
   ];
-
   // 게시물 클릭 시 상세 내용으로 이동하는 함수
   const handlePressPost = (postId) => {
     // 상세 내용 화면으로 이동
     navigation.navigate('PostDetail', { postId });
+  };
+
+  const goToCreate = () => {
+    navigation.navigate('CreatePost');
   };
 
   return (
@@ -65,7 +69,12 @@ const Board = ({ navigation }) => {
           />
         ))}
       </ScrollView>
-    <Footer/>
+      <View style={styles.btnContainer}>
+      <TouchableOpacity style={styles.postCreateBtn} onPress={goToCreate}>
+        <Text style={styles.postBtnText}>글쓰기</Text>
+      <EvilIcons name="pencil" size={26} color="white" style = {styles.postBtnIcon} />
+      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -100,7 +109,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   scrollViewContent: {
-    marginBottom : 80,
+    marginBottom : 0,
+    maxHeight : '90%',
   },
   postContainer: {
     backgroundColor: 'white',
@@ -139,7 +149,33 @@ const styles = StyleSheet.create({
     paddingHorizontal : 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+  },
+  postCreateBtn: {
+    opacity : 0.9,
+    backgroundColor: 'grey',
+    width: 100,
+    height: 50,
+    alignSelf: 'center',
+    borderWidth: 1.5,
+    borderRadius: 20,
+    flexDirection : 'row'
+  },
+  postBtnText: {
+    marginTop : 10,
+    marginLeft : 20,
+    color: 'white',
+    fontFamily: 'SpaceGroteskBold',
+    fontSize: 20,
+  },
+  postBtnIcon : {
+    marginTop : 10,
+  },
+  btnContainer : {
+    backgroundColor: 'transparent',
+    position : 'absolute',
+    top : 620,
+    left : 130
+  },
 });
 
 export default Board;

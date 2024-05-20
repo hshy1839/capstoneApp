@@ -27,7 +27,7 @@ const DepressionSurvey = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get('http://192.168.25.58:3000/api/buddy/userinfo');
+      const response = await axios.get('http://172.16.2.102:3000/api/buddy/userinfo');
       const data = response.data;
       // 데이터에서 사용자 이름 추출
       const name = data.name;
