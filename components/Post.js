@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, RefreshControl } from 'react-native';
+import { FontAwesome5, EvilIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Footer from './Footer';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -8,18 +8,19 @@ import { useNavigation } from '@react-navigation/native';
 const DisplayPosts = () => {
   const [posts, setPosts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get('http://172.16.2.102:3000/api/buddy/getboard');
-        setPosts(response.data);
-      } catch (error) {
-        console.error('게시물을 불러오는 데 실패했습니다:', error);
-      }
-    };
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('http://172.16.3.84:3000/api/buddy/getboard');
+      setPosts(response.data);
+    } catch (error) {
+      console.error('게시물을 불러오는 데 실패했습니다:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchPosts();
   }, []);
 
@@ -34,27 +35,30 @@ const DisplayPosts = () => {
     });
   };
 
-  // 게시물 필터링 함수
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchPosts();
+    setRefreshing(false);
+  };
+
   const filterPosts = (searchKeyword) => {
     return posts.filter((post) => {
       return post.title.toLowerCase().includes(searchKeyword.toLowerCase()) || post.content.toLowerCase().includes(searchKeyword.toLowerCase());
     });
   };
 
-  // 검색 실행 함수
   const handleSearch = async () => {
     if (!searchKeyword) {
-      try {
-        const response = await axios.get('http://172.16.2.102:3000/api/buddy/getboard');
-        setPosts(response.data);
-      } catch (error) {
-        console.error('게시물을 불러오는 데 실패했습니다:', error);
-      }
+      await fetchPosts();
       return;
     }
-    
+
     const filteredPosts = filterPosts(searchKeyword);
     setPosts(filteredPosts);
+  };
+
+  const createPost = () => {
+    navigation.navigate('CreatePost');
   };
 
   return (
@@ -70,18 +74,30 @@ const DisplayPosts = () => {
           <FontAwesome5 name="search" size={20} color="white" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollContainer}>
-        {posts.map((post, index) => (
+      <ScrollView style={styles.scrollContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        {posts.slice().reverse().map((post, index) => (
           <TouchableOpacity activeOpacity={0.8} key={index} style={styles.postContainer} onPress={() => handlePostDetail(post)}>
             <Text style={styles.title}>{post.title}</Text>
-            <Text style={styles.content}>{post.content}</Text>
+            <Text style={styles.content} numberOfLines={1}>{post.content}</Text>
             <View style={styles.subInfo}>
-            <Text style={styles.author}>게시자 : {post.username}</Text>
-            <Text style={styles.date}> {new Date(post.created_at).toLocaleDateString()}</Text>
+              <Text style={styles.author}>{post.username}</Text>
+              <Text style={styles.seperateBar}> | </Text>
+              <Text style={styles.date}>{new Date(post.created_at).toLocaleDateString()}</Text>
+              <View style={styles.commentContainer}>
+              <MaterialCommunityIcons name="comment-text-outline" size={16} color="orange" style={styles.commentIcon} />
+            <Text style={styles.comment}> 0</Text>
+            </View>
             </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <TouchableOpacity style={styles.createBtn} onPress={createPost}>
+        <EvilIcons name="pencil" size={20} color="black" style={styles.createBtnIcon} />
+        <Text style={styles.createBtnText}>글쓰기</Text>
+      </TouchableOpacity>
       <Footer />
     </View>
   );
@@ -98,8 +114,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 5,
-    borderBottomWidth : 1.2,
-    borderColor : 'black',
+    borderBottomWidth: 1.2,
+    borderColor: 'black',
   },
   searchInput: {
     flex: 1,
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     marginRight: 10,
-    backgroundColor : 'white',
+    backgroundColor: 'white',
   },
   searchButton: {
     padding: 10,
@@ -117,39 +133,79 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   scrollContainer: {
-    maxHeight: '85%',
+    maxHeight: '100%',
   },
   postContainer: {
     padding: 5,
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: 'black',
-    borderTopWidth : 0,
+    borderTopWidth: 0,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'SpaceGroteskBold',
     marginBottom: 10,
   },
   content: {
     fontSize: 16,
-    marginBottom: 10,
-    fontFamily : 'SpaceGroteskRegular',
+    marginBottom: 15,
+    fontFamily: 'SpaceGroteskRegular',
   },
   author: {
     fontSize: 16,
     color: 'gray',
     fontFamily: 'SpaceGroteskBold',
   },
+  seperateBar : {
+    fontSize : 16,
+    color : 'gray',
+    fontFamily : 'SpaceGroteskRegular',
+    marginLeft : 5,
+    marginRight : 3,
+  },
   date: {
-    fontSize: 16,
+    marginTop : 2,
+    fontSize: 15,
     color: 'gray',
-    marginLeft : 'auto',
+    fontFamily: 'SpaceGroteskRegular',
+  },
+  subInfo: {
+    flexDirection: 'row',
+  },
+  createBtn: {
+    marginBottom: -50,
+    top: -100,
+    opacity: 0.9,
+    backgroundColor: 'grey',
+    width: '22%',
+    height: '6%',
+    alignSelf: 'center',
+    borderWidth: 1.5,
+    borderRadius: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  createBtnText: {
+    fontSize: 20,
+    color: 'white',
     fontFamily: 'SpaceGroteskBold',
   },
-  subInfo : {
+  createBtnIcon: {
+    color: 'white',
+  },
+  commentContainer : {
     flexDirection : 'row',
-  }
+    marginLeft : 'auto',
+    marginRight : 15,
+  },
+  comment : {
+    fontSize : 14,
+    color : 'orange',
+    marginLeft : 5,
+    fontFamily : 'SpaceGroteskBold'
+  },
 });
 
 export default DisplayPosts;

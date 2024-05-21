@@ -53,7 +53,7 @@ const SurveyScore = ({ score }) => {
       });
       const saveScore = async () => {
         try {
-          const response = await axios.post('http://172.16.2.102:3000/api/buddy/score/surveyscore', userData);
+          const response = await axios.post('http://172.16.3.84:3000/api/buddy/score/surveyscore', userData);
       
           if (response.status === 200) {
             const user = response.data;
