@@ -18,6 +18,11 @@ const Profile = () => {
   const onPressMyInfo = () => {
     navigation.navigate('Myinfo');
   };
+  
+  const goToLifecycle = () => {
+    navigation.navigate('LifeCycle');
+  };
+
 
   const [fadeAnim] = useState(new Animated.Value(0));
   const [username, setUsername] = useState('');
@@ -140,7 +145,7 @@ const Profile = () => {
           </View>
           <View style={styles.component3}>
             <Text style={styles.component3Text}>라이프 패턴</Text>
-            <TouchableOpacity activeOpacity={0.8} style={styles.checkLifeCycle}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.checkLifeCycle} onPress={goToLifecycle}>
               <Text style={styles.lifecycleBtn}>확인하기</Text>
             </TouchableOpacity>
           </View>
