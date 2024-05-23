@@ -16,7 +16,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     
     try {
-      const response = await axios.post(`http://3.37.54.62/api/buddy/login`, {
+      const response = await axios.post(`http://3.37.54.62:3000/api/buddy/login`, {
         username,
        password,
       });

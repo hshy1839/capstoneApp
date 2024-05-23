@@ -55,7 +55,7 @@ const Myinfo = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get('http://3.37.54.62/api/buddy/userinfo');
+      const response = await axios.get('http://3.37.54.62:3000/api/buddy/userinfo');
       const data = response.data;
       setUserInfo(data);
     } catch (error) {
