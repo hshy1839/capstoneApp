@@ -13,7 +13,7 @@ const DisplayPosts = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://3.37.54.62/api/buddy/getboard');
+      const response = await axios.get('http://3.37.54.62:3000/api/buddy/getboard');
       setPosts(response.data);
     } catch (error) {
       console.error('게시물을 불러오는 데 실패했습니다:', error);

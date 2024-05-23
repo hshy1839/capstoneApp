@@ -46,7 +46,7 @@ const Profile = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get('http://3.37.54.62/api/buddy/userinfo');
+      const response = await axios.get('http://3.37.54.62:3000/api/buddy/userinfo');
       const data = response.data;
       // 데이터에서 사용자 이름 추출
       const name = data.name;
@@ -65,7 +65,7 @@ const Profile = () => {
 
   const fetchSurveyScore = async () => {
     try {
-      const response = await axios.get('http://3.37.54.62/api/buddy/score/getsurveyscore');
+      const response = await axios.get('http://3.37.54.62:3000/api/buddy/score/getsurveyscore');
       const data = response.data;
       const surveyScore = data.surveyScore;
       setSurveyScore(surveyScore);
@@ -76,7 +76,7 @@ const Profile = () => {
 
   const fetchSentiment = async () => {
     try {
-      const response = await axios.get('hhttp://3.37.54.62/api/buddy/score/getsentiment');
+      const response = await axios.get('http://3.37.54.62:3000/api/buddy/score/getsentiment');
       const data = response.data;
       const sentiment = data.sentiment;
       setSentiment(sentiment);
