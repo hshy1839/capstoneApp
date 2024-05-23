@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { LineChart } from 'expo-chart-kit';
 import Footer from './Footer';
 
 const LifeCycle = () => {
-  
-  
+  const getInfo = () => {
+
+  }
   const sleepData = [
     { date: '월', value: 7 },
     { date: '화', value: 6 },
@@ -44,63 +44,33 @@ const LifeCycle = () => {
         </TouchableOpacity>
         <View style={styles.chartContainer}>
           <Text style={styles.title}>수면</Text>
-          <LineChart
-            data={{
-              labels: sleepData.map(item => item.date),
-              datasets: [{ data: sleepData.map(item => item.value) }]
-            }}
-            width={320}
-            height={200}
-            yAxisSuffix="시간"
-            chartConfig={{
-              backgroundGradientFrom: 'white',
-              backgroundGradientTo: '#fff',
-              decimalPlaces: 1,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              propsForDots: { r: "6", strokeWidth: "2", stroke: "#ffa726", labelColor: "#0000FF" } // 파란색
-            }}
-          />
+          <View style={styles.graph}>
+            {sleepData.map((data, index) => (
+              <View key={index} style={[styles.bar, { height: data.value * 10 }]}>
+                <Text style={styles.barLabel}>{data.date}</Text>
+              </View>
+            ))}
+          </View>
         </View>
         <View style={styles.chartContainer}>
           <Text style={styles.title}>RAM 수면</Text>
-          <LineChart
-            data={{
-              labels: remSleepData.map(item => item.date),
-              datasets: [{ data: remSleepData.map(item => item.value) }]
-            }}
-            width={320}
-            height={200}
-            yAxisSuffix="시간"
-            chartConfig={{
-              backgroundGradientFrom: '#fff',
-              backgroundGradientTo: '#fff',
-              decimalPlaces: 1,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              propsForDots: { r: "6", strokeWidth: "2", stroke: "#ffa726", labelColor: "#0000FF" } // 파란색
-            }}
-          />
+          <View style={styles.graph}>
+            {remSleepData.map((data, index) => (
+              <View key={index} style={[styles.bar, { height: data.value * 10 }]}>
+                <Text style={styles.barLabel}>{data.date}</Text>
+              </View>
+            ))}
+          </View>
         </View>
         <View style={styles.chartContainer}>
           <Text style={styles.title}>걸음 수</Text>
-          <LineChart
-            data={{
-              labels: stepsData.map(item => item.date),
-              datasets: [{ data: stepsData.map(item => item.value) }]
-            }}
-            width={320}
-            height={200}
-            yAxisSuffix="걸음"
-            chartConfig={{
-              backgroundGradientFrom: '#fff',
-              backgroundGradientTo: '#fff',
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              propsForDots: { r: "6", strokeWidth: "2", stroke: "#ffa726", labelColor: "#0000FF" } // 파란색
-            }}
-          />
+          <View style={styles.graph}>
+            {stepsData.map((data, index) => (
+              <View key={index} style={[styles.bar, { height: data.value / 100 }]}>
+                <Text style={styles.barLabel}>{data.date}</Text>
+              </View>
+            ))}
+          </View>
         </View>
       </ScrollView>
       <Footer />
@@ -147,8 +117,26 @@ const styles = StyleSheet.create({
     fontSize : 20,
     textAlign : 'center',
     marginTop : 10,
-  }
+  },
+  graph: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    width: '90%',
+    height: 200,
+    backgroundColor: 'white',
+    borderWidth: 1.5,
+    borderColor: 'black',
+  },
+  bar: {
+    width: 20,
+    backgroundColor: 'skyblue',
+    alignItems: 'center',
+  },
+  barLabel: {
+    marginTop: 5,
+    fontSize: 16,
+  },
 });
 
 export default LifeCycle;
-
