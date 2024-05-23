@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { LineChart } from 'expo-chart-kit';
 import Footer from './Footer';
 
 const LifeCycle = () => {
-  // 가상 데이터
+  
+  
   const sleepData = [
     { date: '월', value: 7 },
     { date: '화', value: 6 },
@@ -38,6 +39,9 @@ const LifeCycle = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <TouchableOpacity style={styles.getButton} onPress={getInfo}>
+          <Text style={styles.getButtonText}>가져오기</Text>
+        </TouchableOpacity>
         <View style={styles.chartContainer}>
           <Text style={styles.title}>수면</Text>
           <LineChart
@@ -128,6 +132,23 @@ const styles = StyleSheet.create({
     fontFamily : 'SpaceGroteskBold',
     marginBottom: 25,
   },
+  getButton : {
+    backgroundColor : 'skyblue',
+    width : '25%',
+    height : '5%',
+    borderWidth : 1.5,
+    borderColor : 'black',
+    alignSelf : 'center',
+    marginTop : 10,
+  },
+  getButtonText : {
+    color : 'white',
+    fontFamily : 'SpaceGroteskBold',
+    fontSize : 20,
+    textAlign : 'center',
+    marginTop : 10,
+  }
 });
 
 export default LifeCycle;
+

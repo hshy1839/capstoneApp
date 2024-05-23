@@ -13,10 +13,11 @@ const DisplayPosts = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://172.16.3.84:3000/api/buddy/getboard');
+      const response = await axios.get('http://3.37.54.62/api/buddy/getboard');
       setPosts(response.data);
     } catch (error) {
       console.error('게시물을 불러오는 데 실패했습니다:', error);
+      setPosts([]); // API 호출이 실패하면 posts를 빈 배열로 설정
     }
   };
 
@@ -78,7 +79,7 @@ const DisplayPosts = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {posts.slice().reverse().map((post, index) => (
+        {Array.isArray(posts) && posts.slice().reverse().map((post, index) => (
           <TouchableOpacity activeOpacity={0.8} key={index} style={styles.postContainer} onPress={() => handlePostDetail(post)}>
             <Text style={styles.title}>{post.title}</Text>
             <Text style={styles.content} numberOfLines={1}>{post.content}</Text>

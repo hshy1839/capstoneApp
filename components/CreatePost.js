@@ -15,7 +15,7 @@ const CreatePost = () => {
 
   const savePost = async () => {
     try {
-      const response = await axios.post('http://172.16.3.84:3000/api/buddy/board', postData);
+      const response = await axios.post('http://3.37.54.62/api/buddy/board', postData);
 
       if (response.status === 200) {
         const responseData = response.data;

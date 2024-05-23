@@ -14,7 +14,7 @@ const Signup = ({ }) => {
     name: '',
     birthdate: '',
     phoneNumber: '',
-    is_active: 1
+    is_active: 1,
   });
 
 
@@ -22,7 +22,7 @@ const Signup = ({ }) => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post('http://172.16.3.84:3000/api/buddy/signup', userData);
+      const response = await axios.post('http://3.37.54.62/api/buddy/signup', userData);
   
       if (response.status === 200) {
         const user = response.data;
